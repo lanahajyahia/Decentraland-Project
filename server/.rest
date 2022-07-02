@@ -1,0 +1,20 @@
+POST http://localhost:5000/api/users
+content-type: application/json
+
+{
+    "username":"naadeem1",
+    "password":"lana1111",
+    "isBuyer":true
+}
+
+###
+
+POST http://localhost:5000/api/users/login
+content-type: application/json
+
+{
+    "username":"naadeem1",
+    "password":"lana1111"
+}
+
+###
