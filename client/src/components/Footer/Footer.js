@@ -3,7 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 
 const Footer = () => {
   return (
-    <Footer
+    <footer
       style={{
         width: "100%",
         position: "relative",
@@ -17,7 +17,7 @@ const Footer = () => {
           <Col className="text-center py-3">Copyright &copy; Lana Hajyahia</Col>
         </Row>
       </Container>
-    </Footer>
+    </footer>
   );
 };
 
