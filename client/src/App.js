@@ -1,7 +1,15 @@
 import "./App.css";
+import Footer from "./components/Footer/Footer";
+import Header from "./components/Header/Header";
 
 function App() {
-  return <h1> hello lana </h1>;
+  return (
+    <>
+      <Header />
+      <main style={{ minHeight: "93vh" }}></main>
+      <Footer />
+    </>
+  );
 }
 
 export default App;
