@@ -1,19 +1,54 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 import MainScreen from "./../../components/MainScreen";
-import { Form, Container, Row } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import "./LoginPage.css";
+import { Form, Row, Button, Col } from "react-bootstrap";
 
 const LoginPage = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    console.log(username, password);
+
+    try {
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+        },
+      };
+
+      setLoading(true);
+      const { data } = await axios.post(
+        "/api/users/login",
+        {
+          username,
+          password,
+        },
+        config
+      );
+      console.log("data", data);
+      // local storage cannot store object data - only string
+      localStorage.setItem("userInfo", JSON.stringify(data));
+      setLoading(false);
+    } catch (error) {
+      setError(error.response.data.message);
+    }
+  };
   return (
     <MainScreen title="Login">
       <div className="loginContainer">
-        <Form>
+        <Form onSubmit={submitHandler}>
           <Form.Group className="mb-3" controlId="formBasicUsername">
             <Form.Label>Username</Form.Label>
             <Form.Control
               type="text"
-              //   value={username}
+              value={username}
               placeholder="Enter username"
-              //   onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => setUsername(e.target.value)}
             />
           </Form.Group>
 
@@ -21,12 +56,21 @@ const LoginPage = () => {
             <Form.Label>Password</Form.Label>
             <Form.Control
               type="password"
-              //   value={password}
+              value={password}
               placeholder="Enter password"
-              //   onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </Form.Group>
+          <Button variant="primary" type="submit">
+            Submit
+          </Button>
         </Form>
+        <Row className="py-3">
+          <Col>
+            {" "}
+            New Customer? <Link to="/register">Register Here</Link>
+          </Col>
+        </Row>
       </div>
     </MainScreen>
   );
