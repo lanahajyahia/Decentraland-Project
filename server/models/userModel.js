@@ -14,9 +14,8 @@ const userSchema = mongoose.Schema(
       require: true,
     },
     isBuyer: {
-      type: Boolean,
+      type: String,
       require: true,
-      default: false,
     },
     asset: {
       budget: {

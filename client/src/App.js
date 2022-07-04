@@ -5,6 +5,8 @@ import LandingPage from "./pages/LandingPage/LandingPage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
+import GamePage from "./pages/GamePage/GamePage";
+
 function App() {
   return (
     <BrowserRouter>
@@ -12,8 +14,9 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<LandingPage />} exact />
-          <Route path="/login" element={<LoginPage />} exact />
-          <Route path="/register" element={<RegisterPage />} exact />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/decentraland" element={<GamePage />} />
         </Routes>
       </main>
       <Footer />

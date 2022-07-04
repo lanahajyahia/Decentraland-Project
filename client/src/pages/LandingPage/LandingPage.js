@@ -3,6 +3,15 @@ import { Button, Container, Row } from "react-bootstrap";
 import "./LandingPage.css";
 
 const LandingPage = () => {
+  // check if there's something inside our local storage
+  // useEffect(() => {
+  //   const userInfo = localStorage.getItem("userInfo");
+  //   if (userInfo) {
+  //     // console.log(history.push("/myDecentraland"));
+  //     // go to the next page -- should be GAME
+  //     history.push("/myDecentraland");
+  //   }
+  // }, [history]);
   return (
     <div className="main">
       <Container>
