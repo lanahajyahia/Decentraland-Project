@@ -16,7 +16,7 @@ function App() {
           <Route path="/" element={<LandingPage />} exact />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/decentraland" element={<GamePage />} />
+          <Route path="/decentraland" element={<GamePage />} exact />
         </Routes>
       </main>
       <Footer />

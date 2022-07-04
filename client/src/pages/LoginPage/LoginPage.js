@@ -3,26 +3,30 @@ import axios from "axios";
 import MainScreen from "./../../components/MainScreen";
 import Loading from "./../../components/Loading";
 import ErrorMessage from "./../../components/ErrorMessage";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // import { Route , withRouter} from 'react-router-dom';
 
 import "./LoginPage.css";
 import { Form, Row, Button, Col } from "react-bootstrap";
 
-const LoginPage = ({ history }) => {
+const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [userInfo, setUserInfo] = useState("");
   // check if there's something inside our local storage
-  // useEffect(() => {
-  //   const userInfo = localStorage.getItem("userInfo");
-  //   if (userInfo) {
-  //     // console.log(history.push("/myDecentraland"));
-  //     // go to the next page -- should be GAME
-  //     history.push("/myDecentraland");
-  //   }
-  // }, [history]);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const userInfo = localStorage.getItem("userInfo");
+    if (userInfo) {
+      // console.log(history.push("/myDecentraland"));
+      // go to the next page -- should be GAME
+      navigate("/decentraland");
+    }
+  }, [navigate, userInfo]);
   const submitHandler = async (e) => {
     e.preventDefault();
     console.log(username, password);
@@ -46,7 +50,8 @@ const LoginPage = ({ history }) => {
       );
       console.log("data", data);
       // local storage cannot store object data - only string
-      localStorage.setItem("userInfo", JSON.stringify(data));
+      setUserInfo(JSON.stringify(data));
+      localStorage.setItem("userInfo", userInfo);
       setLoading(false);
     } catch (err) {
       setError(err.response.data.message);
