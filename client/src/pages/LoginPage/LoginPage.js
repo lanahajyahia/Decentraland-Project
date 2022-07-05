@@ -18,8 +18,8 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { loading, error, userInfo } = userLogin;
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
   useEffect(() => {
     // const userInfo = localStorage.getItem("userInfo");
     if (userInfo) {

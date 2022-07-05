@@ -1,28 +1,33 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import MainScreen from "./../../components/MainScreen";
 import Loading from "./../../components/Loading";
 import ErrorMessage from "./../../components/ErrorMessage";
-import { Link } from "react-router-dom";
-import {
-  Form,
-  Row,
-  Button,
-  Col,
-  ButtonGroup,
-  ToggleButton,
-} from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { Form, Row, Button, ButtonGroup, ToggleButton } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { register } from "../../actions/userActions";
 
 const RegisterPage = () => {
-  const [checked, setChecked] = useState(false);
+  // const [checked, setChecked] = useState(false);
   const [isBuyer, serIsBuyer] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState(null);
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
 
+  const dispatch = useDispatch();
+  const userRegister = useSelector((state) => state.userRegister);
+  const { loading, error, userInfo } = userRegister;
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    // const userInfo = localStorage.getItem("userInfo");
+    if (userInfo) {
+      // console.log(history.push("/myDecentraland"));
+      // go to the next page -- should be GAME
+      navigate("/decentraland");
+    }
+  }, [navigate, userInfo]);
   const players = [
     { name: "Buyer & Seller", value: "1" },
     { name: "Guest", value: "2" },
@@ -31,42 +36,15 @@ const RegisterPage = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    if (password !== confirmpassword || password === "") {
-      setMessage("Passwords do not match");
+    if (password !== confirmpassword) {
+      setMessage("PASSWORD DOESNT MATC");
     } else {
-      console.log(password);
       if (isBuyer) {
-        setMessage(null);
-        try {
-          const config = {
-            headers: {
-              "Content-type": "application/json",
-            },
-          };
-
-          setLoading(true);
-
-          const { data } = await axios.post(
-            "/api/users",
-            {
-              username,
-              password,
-              isBuyer,
-            },
-            config
-          );
-          setLoading(false);
-          localStorage.setItem("userInfo", JSON.stringify(data));
-        } catch (err) {
-          setError(err.response.data.message);
-          setLoading(false);
-        }
+        dispatch(register(username, password, isBuyer));
       } else {
-        setMessage("You must choose a type");
+        setMessage("use type");
       }
     }
-
-    console.log(username, isBuyer);
   };
   return (
     <MainScreen title="REGISTER">
@@ -129,11 +107,6 @@ const RegisterPage = () => {
             Submit
           </Button>
         </Form>
-        <Row className="py-3">
-          <Col>
-            New Customer? <Link to="/register">Register Here</Link>
-          </Col>
-        </Row>
       </div>
     </MainScreen>
   );
