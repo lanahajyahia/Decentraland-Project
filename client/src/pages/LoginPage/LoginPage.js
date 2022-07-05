@@ -1,62 +1,38 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import MainScreen from "./../../components/MainScreen";
 import Loading from "./../../components/Loading";
 import ErrorMessage from "./../../components/ErrorMessage";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../actions/userActions";
+import "./LoginPage.css";
+
 // import { Route , withRouter} from 'react-router-dom';
 
-import "./LoginPage.css";
 import { Form, Row, Button, Col } from "react-bootstrap";
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [userInfo, setUserInfo] = useState("");
   // check if there's something inside our local storage
-
+  const dispatch = useDispatch();
+  const userLogin = useSelector((state) => state.userLogin);
+  const { loading, error, userInfo } = userLogin;
   const navigate = useNavigate();
 
   useEffect(() => {
-    const userInfo = localStorage.getItem("userInfo");
+    // const userInfo = localStorage.getItem("userInfo");
     if (userInfo) {
       // console.log(history.push("/myDecentraland"));
       // go to the next page -- should be GAME
       navigate("/decentraland");
     }
   }, [navigate, userInfo]);
+
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(username, password);
 
-    try {
-      const config = {
-        headers: {
-          "Content-type": "application/json",
-        },
-      };
-
-      setLoading(true);
-      // destructre only data from what we get
-      const { data } = await axios.post(
-        "/api/users/login",
-        {
-          username,
-          password,
-        },
-        config
-      );
-      console.log("data", data);
-      // local storage cannot store object data - only string
-      setUserInfo(JSON.stringify(data));
-      localStorage.setItem("userInfo", userInfo);
-      setLoading(false);
-    } catch (err) {
-      setError(err.response.data.message);
-      setLoading(false);
-    }
+    dispatch(login(username, password));
   };
   return (
     <MainScreen title="Login">
