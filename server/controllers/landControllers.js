@@ -26,6 +26,7 @@ const createLand = asyncHandler(async (req, res) => {
     res.status(201).json({
       _id: land._id,
       name: land.name,
+      owner: land.owner,
       status: land.status,
       price: land.price,
       asset: land.asset,

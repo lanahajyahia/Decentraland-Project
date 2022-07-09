@@ -22,10 +22,12 @@ const userSchema = mongoose.Schema(
         type: Number,
         default: 1000,
       },
-      assets: {
-        type: Array,
-        default: [],
-      },
+      assets: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Land",
+        },
+      ],
     },
   },
   {

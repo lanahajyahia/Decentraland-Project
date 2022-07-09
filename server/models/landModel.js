@@ -1,6 +1,6 @@
 // what type of data the user is going to have
 const mongoose = require("mongoose");
-const User = require("../models/userModel");
+// const User = require("../models/userModel");
 // import UserSchema from "../models/userModel";
 
 // const bcrypt = require("bcryptjs");
@@ -10,7 +10,8 @@ const landSchema = mongoose.Schema(
     owner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      unique: true,
+      default: null,
+      // unique:/ true,
     },
     name: {
       type: String,
