@@ -14,6 +14,9 @@ app.get("/", (req, res) => {
 
 const userRoutes = require("./routes/userRoutes");
 app.use("/api/users", userRoutes);
+
+const landRoutes = require("./routes/landRoutes");
+app.use("/api/lands", landRoutes);
 app.use(notFound);
 app.use(errorHandler);
 

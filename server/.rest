@@ -18,3 +18,24 @@ content-type: application/json
 }
 
 ###
+
+POST http://localhost:5000/api/lands/create
+content-type: application/json
+
+{
+    "name":"test",
+    "status":true,
+    "price":122,
+}
+
+###
+
+GET  http://localhost:5000/api/lands
+content-type: application/json
+
+###
+
+GET  http://localhost:5000/
+content-type: application/json
+
+###
