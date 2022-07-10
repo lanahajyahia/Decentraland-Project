@@ -9,7 +9,7 @@ import { register } from "../../actions/userActions";
 
 const RegisterPage = () => {
   // const [checked, setChecked] = useState(false);
-  const [isBuyer, serIsBuyer] = useState("");
+  const [isBuyer, setIsBuyer] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
@@ -40,6 +40,7 @@ const RegisterPage = () => {
       setMessage("PASSWORD DOESNT MATC");
     } else {
       if (isBuyer) {
+        console.log("regis page", username, password, isBuyer);
         dispatch(register(username, password, isBuyer));
       } else {
         setMessage("use type");
@@ -96,7 +97,7 @@ const RegisterPage = () => {
                 name="radio"
                 value={radio.value}
                 checked={isBuyer === radio.value}
-                onChange={(e) => serIsBuyer(e.currentTarget.value)}
+                onChange={(e) => setIsBuyer(e.currentTarget.value)}
               >
                 {radio.name}
               </ToggleButton>

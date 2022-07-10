@@ -70,6 +70,11 @@
   --bs-body-line-height: 1.5;
   --bs-body-color: #222;
   --bs-body-bg: #fff;
+  --bs-myLand: #ee8cb6;
+  --bs-forSale: #e7f338;
+  --bs-notForSale: #dc7855;
+  --bs-street: #ddddde;
+  --bs-park: #62af6a;
 }
 *,
 ::after,
@@ -5531,12 +5536,11 @@ fieldset:disabled .btn {
 }
 .modal-backdrop {
   position: fixed;
-  top: 0;
+  /* top: 0; */
   left: 0;
   z-index: 1050;
   width: 100vw;
-  height: 100vh;
-  background-color: #000;
+  background-color: transparent;
 }
 .modal-backdrop.fade {
   opacity: 0;

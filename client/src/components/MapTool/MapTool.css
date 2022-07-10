@@ -1,0 +1,11 @@
+.container#mapContainer {
+  border: 1px solid black;
+  width: 150px;
+  margin-right: 0;
+  margin-left: 0;
+  margin-top: 2px;
+}
+
+.mapRow {
+  justify-content: center;
+}

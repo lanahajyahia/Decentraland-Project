@@ -20,6 +20,9 @@ const Header = () => {
         <Navbar.Collapse id="basic-navbar-nav"></Navbar.Collapse>
         {localStorage.getItem("userInfo") && (
           <Nav className="me-auto m-auto">
+            <Navbar.Brand style={{ color: "#563d7c", fontWeight: "bold" }}>
+              {JSON.parse(localStorage.getItem("userInfo")).username}
+            </Navbar.Brand>
             <Nav.Link
               onClick={logoutHandler}
               // href="#logout"

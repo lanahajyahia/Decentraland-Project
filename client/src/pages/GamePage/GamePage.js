@@ -1,7 +1,13 @@
 import React from "react";
-
+import MapTool from "../../components/MapTool/MapTool";
+import Decentraland from "../Decentraland/Decentraland";
 const GamePage = () => {
-  return <div>GamePage</div>;
+  return (
+    <>
+      <MapTool />
+      <Decentraland></Decentraland>
+    </>
+  );
 };
 
 export default GamePage;
