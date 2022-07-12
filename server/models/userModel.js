@@ -17,19 +17,18 @@ const userSchema = mongoose.Schema(
       type: String,
       require: true,
     },
-    asset: {
-      budget: {
-        type: Number,
-        default: 1000,
-      },
-      assets: [
-        {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "Land",
-        },
-      ],
+    budget: {
+      type: Number,
+      default: 1000,
     },
+    lands: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Land",
+      },
+    ],
   },
+
   {
     timestamps: true,
   }

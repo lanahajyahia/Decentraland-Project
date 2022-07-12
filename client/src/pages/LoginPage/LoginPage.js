@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react";
-import MainScreen from "./../../components/MainScreen";
-import Loading from "./../../components/Loading";
-import ErrorMessage from "./../../components/ErrorMessage";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../actions/userActions";
-import "./LoginPage.css";
-
-// import { Route , withRouter} from 'react-router-dom';
-
 import { Form, Row, Button, Col } from "react-bootstrap";
+import MainScreen from "./../../components/MainScreen";
+import Loading from "./../../components/Loading";
+import ErrorMessage from "./../../components/ErrorMessage";
+import "./LoginPage.css";
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");

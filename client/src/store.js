@@ -17,6 +17,7 @@ const userInfoFromStorage = localStorage.getItem("userInfo")
   : null;
 const initialState = {
   userLogin: { userInfo: userInfoFromStorage },
+  userRegister: { userInfo: userInfoFromStorage },
 };
 const middleWare = [thunk];
 const store = createStore(

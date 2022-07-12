@@ -18,7 +18,7 @@ const RegisterPage = () => {
   const dispatch = useDispatch();
   const userRegister = useSelector((state) => state.userRegister);
   const { loading, error, userInfo } = userRegister;
-
+  // console.log("register userInfo", userInfo);
   const navigate = useNavigate();
   useEffect(() => {
     // const userInfo = localStorage.getItem("userInfo");

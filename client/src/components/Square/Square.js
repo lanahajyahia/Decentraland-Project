@@ -8,7 +8,7 @@ const square = (props) => {
     backgroundColor: props.backgroundColor,
   };
   return (
-    <button className={"square " + props.name} style={myStyle}>
+    <button id={props.myId} className={"square " + props.name} style={myStyle}>
       {/* TODO */}
     </button>
   );

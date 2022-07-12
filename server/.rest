@@ -9,12 +9,22 @@ content-type: application/json
 
 ###
 
+POST http://localhost:5000/api/users/updateAsset
+content-type: application/json
+
+{
+    "username":"admin",
+    "lands": []
+}
+
+###
+
 POST http://localhost:5000/api/users/login
 content-type: application/json
 
 {
-    "username":"naadeem1",
-    "password":"lana1111"
+    "username":"admin",
+    "password":"admin"
 }
 
 ###
