@@ -4,18 +4,16 @@ import Row from "react-bootstrap/Row";
 import "./MapTool.css";
 import "./../../bootstrap.min.css";
 const MapTool = () => {
+  const mapRowStyle = {
+    justifyContent: "center",
+    color: "black",
+    fontSize: "20px",
+    fontWeight: "600",
+    borderBottom: "1px black solid",
+  };
   return (
     <Container id="mapContainer" className="modal-backdrop">
-      <Row
-        className="mapRow"
-        style={{
-          justifyContent: "center",
-          color: "black",
-          fontSize: "20px",
-          fontWeight: "600",
-          borderBottom: "1px black solid",
-        }}
-      >
+      <Row className="mapRow" style={mapRowStyle}>
         Map
       </Row>
       <Row className="mapRow" style={{ background: "var(--bs-myLand)" }}>

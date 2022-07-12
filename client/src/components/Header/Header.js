@@ -16,9 +16,7 @@ const Header = () => {
   return (
     <Navbar bg="primary" expand="lg" variant="dark">
       <Container>
-        <Navbar.Brand style={{ cursor: "pointer" }} onClick={logoutHandler}>
-          Decentraland
-        </Navbar.Brand>
+        <Navbar.Brand style={{ cursor: "pointer" }}>Decentraland</Navbar.Brand>
         <Navbar.Collapse id="basic-navbar-nav"></Navbar.Collapse>
         {localStorage.getItem("userInfo") && (
           <Nav className="me-auto m-auto">

@@ -7,12 +7,12 @@ const Land = require("../models/landModel");
 
 const createLand = asyncHandler(async (req, res) => {
   const { owner, name, status, price, asset, color } = req.body;
-  const landExists = await Land.findOne({ name });
+  // const landExists = await Land.findOne({ name });
   console.log("land details", owner, name, status, price, asset, color);
-  if (landExists) {
-    response.status(400);
-    throw new Error("Land with this name already exist!");
-  }
+  // if (landExists) {
+  //   response.status(400);
+  //   throw new Error("Land with this name already exist!");
+  // }
   const land = await Land.create({
     owner,
     name,
@@ -39,8 +39,6 @@ const createLand = asyncHandler(async (req, res) => {
 });
 
 const getLands = asyncHandler(async (req, res) => {
-  //   const { name, password } = req.body;
-
   const lands = await Land.find();
 
   if (lands) {
@@ -49,8 +47,22 @@ const getLands = asyncHandler(async (req, res) => {
     console.log("here");
     res.status(400);
 
-    throw new Error("Invalid email or pass");
+    throw new Error("getLands func error");
   }
 });
 
-module.exports = { createLand, getLands };
+// getLandById
+const getLand = asyncHandler(async (req, res) => {
+  const land = await Land.findById(req.params.id);
+
+  if (land) {
+    res.json(land);
+  } else {
+    console.log("getLand func error");
+    res.status(400);
+
+    throw new Error("getLand func error");
+  }
+});
+
+module.exports = { createLand, getLands, getLand };

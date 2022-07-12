@@ -2,8 +2,8 @@ POST http://localhost:5000/api/users
 content-type: application/json
 
 {
-    "username":"lion13",
-    "password":"lion",
+    "username":"admin",
+    "password":"admin",
     "isBuyer":true
 }
 
@@ -19,7 +19,7 @@ content-type: application/json
 
 ###
 
-GET http://localhost:5000/api/users/62c03d54e28ea2d4176f84f4
+GET http://localhost:5000/api/users/62cd3195aafc3f061f89af3a
 content-type: application/json
 
 ###
@@ -28,20 +28,9 @@ POST http://localhost:5000/api/lands/create
 content-type: application/json
 
 {
-	"owner": {
-		"_id": "62c03d54e28ea2d4176f84f4",
-		"username": "naadeem1",
-		"isBuyer": "true",
-		"asset": {
-			"budget": 1000,
-			"assets": []
-		},
-		"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYzAzZDU0ZTI4ZWEyZDQxNzZmODRmNCIsImlhdCI6MTY1NzM2NTEyNSwiZXhwIjoxNjYwODIxMTI1fQ.Bc7EwTJewLICdZwAZSsEpMebf59MihZREoT7Mom1Eu8"
-	},
 	"name": "test6",
 	"status": true,
 	"price": 122
-
 }
 
 ###

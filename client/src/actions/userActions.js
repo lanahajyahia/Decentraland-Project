@@ -23,7 +23,7 @@ export const login = (username, password) => async (dispatch) => {
         "Content-type": "application/json",
       },
     };
-    // destructre only data from what we get
+    // destructure only data from what we get
     const { data } = await axios.post(
       "/api/users/login",
       {

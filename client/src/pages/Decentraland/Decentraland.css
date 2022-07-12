@@ -1,0 +1,8 @@
+.boardRow {
+  display: flex;
+}
+
+#decentralandDiv {
+  margin: 0 auto;
+  width: 800px;
+}
