@@ -4,6 +4,7 @@ import Square from "../../components/Square/Square";
 import "./../../bootstrap.min.css";
 import "./Decentraland.css";
 import axios from "axios";
+import Popup from "../../components/Popup/Popup";
 
 const colorsArray = [
   {
@@ -30,6 +31,7 @@ const colorsArray = [
 
 const Decentraland = () => {
   const [lands, setLands] = useState([]);
+  const [buttonPopup, setButtonPopup] = useState(false);
   const localLands = JSON.parse(localStorage.getItem("landsInfo"));
   console.log("localLands", localLands);
   const createLands = async () => {
@@ -108,12 +110,17 @@ const Decentraland = () => {
     <Container id="decentralandDiv">
       {lands.map((item, i) => (
         <Square
-          myId={item._id}
           key={i}
+          setOpenPopupTrigger={setButtonPopup}
+          myId={item._id}
           name={item.name}
           backgroundColor={lands[i].color}
         ></Square>
       ))}
+      <Popup
+        trigger={buttonPopup}
+        setClosePopupTrigger={setButtonPopup}
+      ></Popup>
     </Container>
   );
 };
