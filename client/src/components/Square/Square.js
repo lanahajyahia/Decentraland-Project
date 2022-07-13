@@ -4,14 +4,17 @@ import "./../../bootstrap.min.css";
 // onclick + color background
 const square = (props) => {
   const myStyle = {
-    backgroundColor: props.backgroundColor,
+    backgroundColor: props.item.color,
   };
   return (
     <>
       <button
-        onClick={() => props.setOpenPopupTrigger(true)}
-        id={props.myId}
-        className={"square " + props.name}
+        onClick={() => {
+          props.setOpenPopupTrigger(true);
+          props.setClickedItem(props.item);
+        }}
+        id={props.item._id}
+        className={"square " + props.item.name}
         style={myStyle}
       >
         {/* TODO */}

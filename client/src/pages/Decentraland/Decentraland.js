@@ -23,15 +23,12 @@ const colorsArray = [
     type: "forSale",
     color: "var(--bs-forSale)",
   },
-  // {
-  //   type: "myLand",
-  //   color: "var(--bs-myLand)",
-  // },
 ];
 
 const Decentraland = () => {
   const [lands, setLands] = useState([]);
   const [buttonPopup, setButtonPopup] = useState(false);
+  const [chosenItem, setChosenItem] = useState({});
   const localLands = JSON.parse(localStorage.getItem("landsInfo"));
   console.log("localLands", localLands);
   const createLands = async () => {
@@ -68,6 +65,14 @@ const Decentraland = () => {
       }
     }
     localStorage.setItem("landsInfo", JSON.stringify(lands));
+    var userInfo = localStorage.getItem("userInfo");
+    // If no existing data, create an array
+    // Otherwise, convert the localStorage string to an array
+    userInfo = userInfo ? JSON.parse(userInfo) : {};
+    // Add new data to localStorage Array
+    userInfo["lands"] = lands;
+    // Save back to localStorage
+    localStorage.setItem("userInfo", JSON.stringify(userInfo));
   };
 
   useEffect(() => {
@@ -112,14 +117,14 @@ const Decentraland = () => {
         <Square
           key={i}
           setOpenPopupTrigger={setButtonPopup}
-          myId={item._id}
-          name={item.name}
-          backgroundColor={lands[i].color}
+          setClickedItem={setChosenItem}
+          item={item}
         ></Square>
       ))}
       <Popup
         trigger={buttonPopup}
         setClosePopupTrigger={setButtonPopup}
+        popupItem={chosenItem}
       ></Popup>
     </Container>
   );

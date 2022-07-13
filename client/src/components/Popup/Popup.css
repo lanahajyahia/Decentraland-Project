@@ -26,3 +26,8 @@
   top: 16px;
   right: 16px;
 }
+.popup-inner .edit-btn {
+  position: absolute;
+  top: 16px;
+  right: 30px;
+}
