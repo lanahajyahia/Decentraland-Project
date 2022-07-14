@@ -3,9 +3,23 @@ import "./Square.css";
 import "./../../bootstrap.min.css";
 // onclick + color background
 const square = (props) => {
+  let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
   const myStyle = {
-    backgroundColor: props.item.color,
+    backgroundColor: "",
   };
+  let nameOfClass = "square ";
+  if (
+    userInfo._id === props.item.owner &&
+    (props.item.name === "forSale" || props.item.name === "notForSale")
+  ) {
+    nameOfClass += props.item.name + " myLand";
+    myStyle["backgroundColor"] = "var(--bs-myLand)";
+  } else {
+    nameOfClass += props.item.name;
+    myStyle["backgroundColor"] = props.item.color;
+  }
+
   return (
     <>
       <button
@@ -14,7 +28,7 @@ const square = (props) => {
           props.setClickedItem(props.item);
         }}
         id={props.item._id}
-        className={"square " + props.item.name}
+        className={nameOfClass}
         style={myStyle}
       >
         {/* TODO */}

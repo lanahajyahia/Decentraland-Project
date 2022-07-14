@@ -31,3 +31,9 @@
   top: 16px;
   right: 30px;
 }
+
+.popup-inner .buy-land-btn {
+  position: absolute;
+  top: 16px;
+  right: 60px;
+}

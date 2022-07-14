@@ -115,10 +115,9 @@ const Decentraland = () => {
 
     const result_myLands = lands.filter(checkMyLands);
     userInfo["lands"] = result_myLands;
-    // console.log("length not 0", result_myLands);
-
     // Save back to localStorage
     localStorage.setItem("userInfo", JSON.stringify(userInfo));
+    // localStorage.setItem("landsInfo", JSON.stringify(lands));
   }
 
   //     rows.push(
