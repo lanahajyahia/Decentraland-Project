@@ -30,7 +30,8 @@ const Decentraland = () => {
   const [buttonPopup, setButtonPopup] = useState(false);
   const [chosenItem, setChosenItem] = useState({});
   const localLands = JSON.parse(localStorage.getItem("landsInfo"));
-  console.log("localLands", localLands);
+  console.log("lands", lands);
+
   const createLands = async () => {
     for (let i = 0; i < 10; i++) {
       let randNum = Math.floor(Math.random() * 4);
@@ -42,9 +43,13 @@ const Decentraland = () => {
             "Content-type": "application/json",
           },
         };
+        let price = 0;
+        if (name === "notForSale" || name === "forSale") {
+          price = Math.floor(Math.random() * (200 - 15 + 1) + 15);
+        }
         const { data } = await axios.post(
           "/api/lands/create",
-          { name, color },
+          { name, color, price },
           config
         );
         // ONLY LANDS FOR SALE OR NOT FOR SALE - update owner lands
@@ -64,15 +69,6 @@ const Decentraland = () => {
         console.log(error);
       }
     }
-    localStorage.setItem("landsInfo", JSON.stringify(lands));
-    var userInfo = localStorage.getItem("userInfo");
-    // If no existing data, create an array
-    // Otherwise, convert the localStorage string to an array
-    userInfo = userInfo ? JSON.parse(userInfo) : {};
-    // Add new data to localStorage Array
-    userInfo["lands"] = lands;
-    // Save back to localStorage
-    localStorage.setItem("userInfo", JSON.stringify(userInfo));
   };
 
   useEffect(() => {
@@ -85,10 +81,10 @@ const Decentraland = () => {
         };
         // destructure only data from what we get
         const { data } = await axios.get("/api/lands", config);
-        console.log("get data lana", data);
 
         if (data.length === 0) {
           createLands();
+          localStorage.setItem("landsInfo", JSON.stringify(lands));
         } else {
           setLands(data);
           localStorage.setItem("landsInfo", JSON.stringify(data));
@@ -98,13 +94,32 @@ const Decentraland = () => {
       }
     };
     if (!localLands || localLands.length === 0) {
-      console.log("!loc");
+      // console.log("!loc");
       create();
       // rows = initUI();
     } else {
       setLands(JSON.parse(localStorage.getItem("landsInfo")));
+      localStorage.setItem("landsInfo", JSON.stringify(lands));
+      // console.log("refresh local lands", localLands);
     }
   }, []);
+  if (lands) {
+    let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    // check if lands belong to the owner
+    const checkMyLands = (item) => {
+      return (
+        item.owner === userInfo._id &&
+        (item.name === "notForSale" || item.name === "forSale")
+      );
+    };
+
+    const result_myLands = lands.filter(checkMyLands);
+    userInfo["lands"] = result_myLands;
+    // console.log("length not 0", result_myLands);
+
+    // Save back to localStorage
+    localStorage.setItem("userInfo", JSON.stringify(userInfo));
+  }
 
   //     rows.push(
   //       <div key={i} id={i} className="boardRow">
