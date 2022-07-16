@@ -1,0 +1,11 @@
+.inner-editLand .cancel-edit-btn {
+  position: absolute;
+  top: 16px;
+  right: 30px;
+}
+
+.inner-editLand .save-land-btn {
+  bottom: 1px;
+  right: 4px;
+  position: absolute;
+}
