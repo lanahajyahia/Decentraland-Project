@@ -84,7 +84,7 @@ const updateUser = asyncHandler(async (req, res) => {
   try {
     const updateUser = await User.updateOne(
       { username: username },
-      { $set: { lands: lands } }
+      { $push: { lands: lands } }
     );
     if (updateUser) res.json(updateUser);
   } catch (err) {

@@ -10,7 +10,6 @@ const landSchema = mongoose.Schema(
     owner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      default: "62cdd9e453f87e0e47940cb9",
     },
     name: {
       type: String,

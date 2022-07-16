@@ -30,6 +30,8 @@ const Decentraland = () => {
   const [buttonPopup, setButtonPopup] = useState(false);
   const [chosenItem, setChosenItem] = useState({});
   const localLands = JSON.parse(localStorage.getItem("landsInfo"));
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
   console.log("lands", lands);
 
   const createLands = async () => {
@@ -44,12 +46,14 @@ const Decentraland = () => {
           },
         };
         let price = 0;
+        let owner = userInfo._id;
         if (name === "notForSale" || name === "forSale") {
           price = Math.floor(Math.random() * (200 - 15 + 1) + 15);
         }
+
         const { data } = await axios.post(
           "/api/lands/create",
-          { name, color, price },
+          { name, color, price, owner },
           config
         );
         // ONLY LANDS FOR SALE OR NOT FOR SALE - update owner lands
@@ -69,6 +73,7 @@ const Decentraland = () => {
         console.log(error);
       }
     }
+    localStorage.setItem("landsInfo", JSON.stringify(lands));
   };
 
   useEffect(() => {
@@ -103,7 +108,8 @@ const Decentraland = () => {
       // console.log("refresh local lands", localLands);
     }
   }, []);
-  if (lands) {
+  if (lands.length !== 0) {
+    console.log("not 0 lands", lands);
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     // check if lands belong to the owner
     const checkMyLands = (item) => {
@@ -112,28 +118,25 @@ const Decentraland = () => {
         (item.name === "notForSale" || item.name === "forSale")
       );
     };
-
     const result_myLands = lands.filter(checkMyLands);
+    console.log("result_myLands", result_myLands);
     userInfo["lands"] = result_myLands;
     // Save back to localStorage
     localStorage.setItem("userInfo", JSON.stringify(userInfo));
     // localStorage.setItem("landsInfo", JSON.stringify(lands));
   }
 
-  //     rows.push(
-  //       <div key={i} id={i} className="boardRow">
-  //         {createSquares(i)}
-  //       </div>
-
   return (
     <Container id="decentralandDiv">
       {lands.map((item, i) => (
+        // <div key={i} id={i} className="boardRow">
         <Square
           key={i}
           setOpenPopupTrigger={setButtonPopup}
           setClickedItem={setChosenItem}
           item={item}
         ></Square>
+        // </div>
       ))}
       <Popup
         trigger={buttonPopup}

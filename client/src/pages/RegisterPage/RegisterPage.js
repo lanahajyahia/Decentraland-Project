@@ -9,7 +9,7 @@ import { register } from "../../actions/userActions";
 
 const RegisterPage = () => {
   // const [checked, setChecked] = useState(false);
-  const [isBuyer, setIsBuyer] = useState("");
+  const [isBuyer, setIsBuyer] = useState(null);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
@@ -29,17 +29,17 @@ const RegisterPage = () => {
     }
   }, [navigate, userInfo]);
   const players = [
-    { name: "Buyer & Seller", value: "1" },
-    { name: "Guest", value: "2" },
+    { name: "Buyer & Seller", value: true },
+    { name: "Guest", value: false },
   ];
 
   const submitHandler = async (e) => {
     e.preventDefault();
 
     if (password !== confirmpassword) {
-      setMessage("PASSWORD DOESNT MATC");
+      setMessage("PASSWORD DOESN'T MATCH");
     } else {
-      if (isBuyer) {
+      if (isBuyer !== null) {
         console.log("regis page", username, password, isBuyer);
         dispatch(register(username, password, isBuyer));
       } else {

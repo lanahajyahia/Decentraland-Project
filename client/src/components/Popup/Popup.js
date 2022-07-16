@@ -23,8 +23,11 @@ const Popup = (props) => {
           >
             X
           </button>
-          <div>Name {props.popupItem.name}</div>
-          <div>Price {props.popupItem.price}</div>
+          <div id="Square name">{props.popupItem.name}</div>
+          {(props.popupItem.name === "forSale" ||
+            props.popupItem.name === "notForSale") && (
+            <div>Price: {props.popupItem.price}$</div>
+          )}
         </div>
         {
           /* allow edit only if user's Land */
@@ -42,9 +45,11 @@ const Popup = (props) => {
         {
           /* allow edit only if user's Land */
           loggedUser._id !== props.popupItem.owner &&
-            props.popupItem.name === "forSale" && (
+            props.popupItem.name === "forSale" &&
+            loggedUser.isBuyer && (
               <button
                 className="buy-land-btn"
+                // on click check user budget if he can buy
                 // onClick={() => props.setClosePopupTrigger(false)
               >
                 Buy Land
