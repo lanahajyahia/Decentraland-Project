@@ -20,8 +20,7 @@ const Header = () => {
         <Navbar.Collapse id="basic-navbar-nav"></Navbar.Collapse>
         {localStorage.getItem("userInfo") && (
           <Nav className="me-auto m-auto">
-            {JSON.parse(localStorage.getItem("userInfo")).isBuyer ===
-              "true" && (
+            {JSON.parse(localStorage.getItem("userInfo")).isBuyer && (
               <Navbar.Brand style={{ color: "white" }}>
                 {"Budget: " +
                   JSON.parse(localStorage.getItem("userInfo")).budget}

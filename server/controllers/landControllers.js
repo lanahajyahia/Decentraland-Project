@@ -65,4 +65,19 @@ const getLand = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { createLand, getLands, getLand };
+// update status and price of land
+const updateLand = asyncHandler(async (req, res) => {
+  const { _id, name, price, color, owner } = req.body;
+  try {
+    const updateLand = await Land.updateOne(
+      { _id: _id },
+      { $set: { name: name, price: price, color: color, owner: owner } }
+    );
+    if (updateLand) res.json(updateLand);
+  } catch (err) {
+    // res.status(400);
+    // throw new Error("Cannot update asset of user");
+    return res.status(500).json({ message: err.message });
+  }
+});
+module.exports = { createLand, getLands, getLand, updateLand };

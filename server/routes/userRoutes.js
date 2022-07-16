@@ -4,6 +4,7 @@ const {
   registerUser,
   authUser,
   updateUser,
+  removeUsersLand,
 } = require("../controllers/userControllers");
 const router = express.Router();
 
@@ -13,5 +14,6 @@ router.route("/login").post(authUser);
 router.get("/:id", getUser);
 // update asset of user
 router.route("/updateAsset").post(updateUser);
+router.route("/removeAsset").post(removeUsersLand);
 
 module.exports = router;

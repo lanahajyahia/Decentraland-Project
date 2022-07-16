@@ -16,11 +16,13 @@ const MapTool = () => {
       <Row className="mapRow" style={mapRowStyle}>
         Map
       </Row>
-      <Row className="mapRow" style={{ background: "var(--bs-myLand)" }}>
-        {localStorage.getItem("userInfo") &&
-          JSON.parse(localStorage.getItem("userInfo")).username}
-        's Lands
-      </Row>
+      {localStorage.getItem("userInfo") &&
+        JSON.parse(localStorage.getItem("userInfo")).isBuyer && (
+          <Row className="mapRow" style={{ background: "var(--bs-myLand)" }}>
+            {JSON.parse(localStorage.getItem("userInfo")).username}
+            's Lands
+          </Row>
+        )}
       <Row className="mapRow" style={{ background: "var(--bs-forSale)" }}>
         For Sale
       </Row>

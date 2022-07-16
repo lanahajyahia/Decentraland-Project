@@ -14,7 +14,17 @@ content-type: application/json
 
 {
     "username":"admin",
-    "lands": []
+    "budget": 1000
+}
+
+###
+
+POST http://localhost:5000/api/users/removeAsset
+content-type: application/json
+
+{
+    "username":"admin",
+    "_id": "62d29ca51cc9791063f5927f"
 }
 
 ###
@@ -29,7 +39,7 @@ content-type: application/json
 
 ###
 
-GET http://localhost:5000/api/users/62cd3195aafc3f061f89af3a
+GET http://localhost:5000/api/users/62d29ca11cc9791063f5926a
 content-type: application/json
 
 ###
@@ -52,5 +62,17 @@ content-type: application/json
 
 GET  http://localhost:5000/
 content-type: application/json
+
+###
+
+
+POST http://localhost:5000/api/lands/update
+content-type: application/json
+
+{
+	"_id": "62d29ca21cc9791063f5926f",
+	"name": "forSale",
+    "color": "var(--bs-forSale)"
+}
 
 ###

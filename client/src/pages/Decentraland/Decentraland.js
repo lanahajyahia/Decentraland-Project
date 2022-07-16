@@ -99,13 +99,10 @@ const Decentraland = () => {
       }
     };
     if (!localLands || localLands.length === 0) {
-      // console.log("!loc");
       create();
-      // rows = initUI();
     } else {
       setLands(JSON.parse(localStorage.getItem("landsInfo")));
       localStorage.setItem("landsInfo", JSON.stringify(lands));
-      // console.log("refresh local lands", localLands);
     }
   }, []);
   if (lands.length !== 0) {
@@ -123,7 +120,7 @@ const Decentraland = () => {
     userInfo["lands"] = result_myLands;
     // Save back to localStorage
     localStorage.setItem("userInfo", JSON.stringify(userInfo));
-    // localStorage.setItem("landsInfo", JSON.stringify(lands));
+    localStorage.setItem("landsInfo", JSON.stringify(lands));
   }
 
   return (
@@ -142,6 +139,8 @@ const Decentraland = () => {
         trigger={buttonPopup}
         setClosePopupTrigger={setButtonPopup}
         popupItem={chosenItem}
+        setLands={setLands}
+        setChosenItem={setChosenItem}
       ></Popup>
     </Container>
   );

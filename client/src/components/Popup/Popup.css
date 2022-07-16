@@ -24,7 +24,7 @@
 .popup-inner .close-btn {
   position: absolute;
   top: 16px;
-  right: 16px;
+  right: 0px;
 }
 .popup-inner .edit-btn {
   position: absolute;
@@ -34,6 +34,7 @@
 
 .popup-inner .buy-land-btn {
   position: absolute;
-  top: 16px;
-  right: 60px;
+  bottom: 1px;
+  left: 19px;
+  margin-top: 0.5em;
 }
