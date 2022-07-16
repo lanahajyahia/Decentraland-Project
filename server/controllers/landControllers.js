@@ -8,7 +8,6 @@ const Land = require("../models/landModel");
 const createLand = asyncHandler(async (req, res) => {
   const { owner, name, status, price, asset, color } = req.body;
   // const landExists = await Land.findOne({ name });
-  console.log("land details", owner, name, status, price, asset, color);
   // if (landExists) {
   //   response.status(400);
   //   throw new Error("Land with this name already exist!");
@@ -58,7 +57,6 @@ const getLand = asyncHandler(async (req, res) => {
   if (land) {
     res.json(land);
   } else {
-    console.log("getLand func error");
     res.status(400);
 
     throw new Error("getLand func error");

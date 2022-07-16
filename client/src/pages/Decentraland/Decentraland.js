@@ -32,7 +32,6 @@ const Decentraland = () => {
   const localLands = JSON.parse(localStorage.getItem("landsInfo"));
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
-  console.log("lands", lands);
 
   const createLands = async () => {
     for (let i = 0; i < 10; i++) {
@@ -106,7 +105,6 @@ const Decentraland = () => {
     }
   }, []);
   if (lands.length !== 0) {
-    console.log("not 0 lands", lands);
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     // check if lands belong to the owner
     const checkMyLands = (item) => {
@@ -116,7 +114,6 @@ const Decentraland = () => {
       );
     };
     const result_myLands = lands.filter(checkMyLands);
-    console.log("result_myLands", result_myLands);
     userInfo["lands"] = result_myLands;
     // Save back to localStorage
     localStorage.setItem("userInfo", JSON.stringify(userInfo));

@@ -80,11 +80,11 @@ const getUser = asyncHandler(async (req, res) => {
 
 // update assets and budget - TODO
 const updateUser = asyncHandler(async (req, res) => {
-  const { username, lands, budget } = req.body;
+  const { username, _id, budget } = req.body;
   try {
     const updateUser = await User.updateOne(
       { username: username },
-      { $push: { lands: lands }, budget: budget }
+      { $push: { lands: _id }, budget: budget }
     );
     if (updateUser) res.json(updateUser);
   } catch (err) {
@@ -96,11 +96,11 @@ const updateUser = asyncHandler(async (req, res) => {
 
 // update assets and budget - TODO
 const removeUsersLand = asyncHandler(async (req, res) => {
-  const { username, _id } = req.body;
+  const { username, _id, budget } = req.body;
   try {
     const updateUser = await User.updateOne(
       { username: username },
-      { $pull: { lands: _id } }
+      { $pull: { lands: _id }, budget: budget }
     );
     if (updateUser) res.json(updateUser);
   } catch (err) {

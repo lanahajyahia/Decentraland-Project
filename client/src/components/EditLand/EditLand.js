@@ -10,8 +10,6 @@ const EditLand = (props) => {
   const [editPrice, setEditPrice] = useState(props.popupItem.price);
   const [error, setError] = useState(null);
 
-  console.log("edit stas", editStatus);
-  console.log("editPrice", props.popupItem.price);
 
   const updateLand = async () => {
     if (

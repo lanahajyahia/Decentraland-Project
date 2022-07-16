@@ -14,7 +14,7 @@ content-type: application/json
 
 {
     "username":"admin",
-    "budget": 1000
+    "budget": 1157
 }
 
 ###
@@ -24,7 +24,7 @@ content-type: application/json
 
 {
     "username":"admin",
-    "_id": "62d29ca51cc9791063f5927f"
+    "budget": 1122
 }
 
 ###

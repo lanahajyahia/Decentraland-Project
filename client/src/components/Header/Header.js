@@ -23,7 +23,8 @@ const Header = () => {
             {JSON.parse(localStorage.getItem("userInfo")).isBuyer && (
               <Navbar.Brand style={{ color: "white" }}>
                 {"Budget: " +
-                  JSON.parse(localStorage.getItem("userInfo")).budget}
+                  JSON.parse(localStorage.getItem("userInfo")).budget +
+                  "$"}
               </Navbar.Brand>
             )}
             <Navbar.Brand style={{ color: "#563d7c", fontWeight: "bold" }}>

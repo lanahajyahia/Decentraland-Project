@@ -20,7 +20,6 @@ const LoginPage = () => {
   useEffect(() => {
     // const userInfo = localStorage.getItem("userInfo");
     if (userInfo) {
-      // console.log(history.push("/myDecentraland"));
       // go to the next page -- should be GAME
       navigate("/decentraland");
     }
