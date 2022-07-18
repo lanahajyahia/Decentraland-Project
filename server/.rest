@@ -47,11 +47,25 @@ content-type: application/json
 POST http://localhost:5000/api/lands/create
 content-type: application/json
 
-{
-	"name": "test6",
-	"status": true,
-	"price": 122
-}
+[{
+		"color": "var(--bs-notForSale)",
+		"createdAt": "2022-07-18T19:48:32.988Z",
+		"name": "notForSale",
+		"owner": "62d5b77edbb1630b69c27c72",
+		"price": 97,
+		"status": false
+
+	},
+	{
+		"name": "test6",
+		"price": 122
+	},
+	{
+
+		"name": "test6",
+		"price": 122
+	}
+]
 
 ###
 

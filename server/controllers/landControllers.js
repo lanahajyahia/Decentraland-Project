@@ -5,32 +5,13 @@ const Land = require("../models/landModel");
 
 // const generateToken = require("../utils/generateToken");
 
-const createLand = asyncHandler(async (req, res) => {
-  const { owner, name, status, price, asset, color } = req.body;
-  // const landExists = await Land.findOne({ name });
-  // if (landExists) {
-  //   response.status(400);
-  //   throw new Error("Land with this name already exist!");
-  // }
-  const land = await Land.create({
-    owner,
-    name,
-    status,
-    price,
-    asset,
-    color,
-  });
+const createLands = asyncHandler(async (req, res) => {
+  console.log("lands", lands);
+  const land = await Land.insertMany(req.body);
 
   if (land) {
-    res.status(201).json({
-      _id: land._id,
-      name: land.name,
-      owner: land.owner,
-      status: land.status,
-      price: land.price,
-      asset: land.asset,
-      color: land.color,
-    });
+    console.log("land", land);
+    res.status(201).json(land);
   } else {
     res.status(400);
     throw new Error("error happened");
@@ -78,4 +59,4 @@ const updateLand = asyncHandler(async (req, res) => {
     return res.status(500).json({ message: err.message });
   }
 });
-module.exports = { createLand, getLands, getLand, updateLand };
+module.exports = { createLands, getLands, getLand, updateLand };

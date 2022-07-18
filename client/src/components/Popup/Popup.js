@@ -9,7 +9,7 @@ import "./Popup.css";
 const Popup = (props) => {
   const loggedUser = JSON.parse(localStorage.getItem("userInfo"));
 
-  console.log(loggedUser);
+  // console.log(loggedUser);
   const [editTrigger, setEditTrigger] = useState(false);
   const [landPopUp, setLandPopup] = useState(true);
   const [buyError, setBuyError] = useState(null);

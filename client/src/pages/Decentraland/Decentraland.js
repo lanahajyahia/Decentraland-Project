@@ -4,17 +4,13 @@ import Square from "../../components/Square/Square";
 import "./../../bootstrap.min.css";
 import "./Decentraland.css";
 import axios from "axios";
-import Popup from "../../components/Popup/Popup";
+// import Popup from "../../components/Popup/Popup";
 
 const colorsArray = [
-  {
-    type: "street",
-    color: "var(--bs-street)",
-  },
-  {
-    type: "park",
-    color: "var(--bs-park)",
-  },
+  // {
+  //   type: "street",
+  //   color: "var(--bs-street)",
+  // },
   {
     type: "notForSale",
     color: "var(--bs-notForSale)",
@@ -23,22 +19,52 @@ const colorsArray = [
     type: "forSale",
     color: "var(--bs-forSale)",
   },
+  {
+    type: "park",
+    color: "var(--bs-park)",
+  },
 ];
 
 const Decentraland = () => {
   const [lands, setLands] = useState([]);
-  const [buttonPopup, setButtonPopup] = useState(false);
-  const [chosenItem, setChosenItem] = useState({});
+
+  // const [buttonPopup, setButtonPopup] = useState(false);
+  // const [chosenItem, setChosenItem] = useState({});
   const localLands = JSON.parse(localStorage.getItem("landsInfo"));
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
-
-  const createLands = async () => {
-    for (let i = 0; i < 10; i++) {
-      let randNum = Math.floor(Math.random() * 4);
+  const createLands = async (row = 10, col = 10) => {
+    let numOfParks = 0;
+    for (let i = 0; i < row * col; i++) {
+      let randNum = 0;
+      // if (numOfParks >= row * col * 0.1) {
+      randNum = Math.floor(Math.random() * 2);
+      // } else {
+      //   randNum = Math.floor(Math.random() * 3);
+      // }
       try {
-        let name = colorsArray[randNum].type;
-        let color = colorsArray[randNum].color;
+        let name = "";
+        let color = "";
+        if (
+          i % row === parseInt(col / 2) ||
+          parseInt(i / row) === parseInt(row / 2)
+        ) {
+          name = "Street";
+          color = "var(--bs-street)";
+        } else if (
+          (i % row === 1 || (parseInt(i / row) === row - 2 && i % row > 1)) &&
+          numOfParks < row * col * 0.2
+        ) {
+          name = "Park";
+          color = "var(--bs-park)";
+        } else {
+          name = colorsArray[randNum].type;
+          color = colorsArray[randNum].color;
+        }
+
+        if (name === "Park") {
+          numOfParks++;
+        }
         const config = {
           headers: {
             "Content-type": "application/json",
@@ -51,7 +77,7 @@ const Decentraland = () => {
         }
 
         const { data } = await axios.post(
-          "/api/lands/create",
+          "/api/lands/createLands",
           { name, color, price, owner },
           config
         );
@@ -87,7 +113,7 @@ const Decentraland = () => {
         const { data } = await axios.get("/api/lands", config);
 
         if (data.length === 0) {
-          createLands();
+          createLands(50, 50);
           localStorage.setItem("landsInfo", JSON.stringify(lands));
         } else {
           setLands(data);
@@ -104,6 +130,7 @@ const Decentraland = () => {
       localStorage.setItem("landsInfo", JSON.stringify(lands));
     }
   }, []);
+  // console.log("yLands", JSON.parse(localStorage.getItem("yLands")));
   if (lands.length !== 0) {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     // check if lands belong to the owner
@@ -120,25 +147,27 @@ const Decentraland = () => {
     localStorage.setItem("landsInfo", JSON.stringify(lands));
   }
 
+  let colSize = 20 * 50;
   return (
-    <Container id="decentralandDiv">
-      {lands.map((item, i) => (
-        // <div key={i} id={i} className="boardRow">
-        <Square
-          key={i}
-          setOpenPopupTrigger={setButtonPopup}
-          setClickedItem={setChosenItem}
-          item={item}
-        ></Square>
-        // </div>
-      ))}
-      <Popup
-        trigger={buttonPopup}
-        setClosePopupTrigger={setButtonPopup}
-        popupItem={chosenItem}
-        setLands={setLands}
-        setChosenItem={setChosenItem}
-      ></Popup>
+    <Container
+      id="decentralandDiv"
+      style={{ gridTemplateColumns: colSize + "px" }}
+    >
+      <div>
+        {lands.map((item, i) => (
+          // <div key={i} id={i} className="boardRow">
+
+          <Square
+            key={i}
+            // setOpenPopupTrigger={setButtonPopup}
+            // setClickedItem={setChosenItem}
+            item={item}
+            setLands={setLands}
+          ></Square>
+
+          // </div>
+        ))}
+      </div>
     </Container>
   );
 };

@@ -15,6 +15,7 @@ const landSchema = mongoose.Schema(
       type: String,
       require: true,
     },
+
     status: {
       type: Boolean,
       require: true,

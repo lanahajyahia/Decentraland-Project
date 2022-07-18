@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Square.css";
 import "./../../bootstrap.min.css";
-// onclick + color background
-const square = (props) => {
-  let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+import Popup from "../../components/Popup/Popup";
 
+// onclick + color background
+const Square = (props) => {
+  const [buttonPopup, setButtonPopup] = useState(false);
+  const [chosenItem, setChosenItem] = useState({});
+
+  let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  console.log("props.item", props.item);
   const myStyle = {
     backgroundColor: "",
   };
@@ -24,8 +29,8 @@ const square = (props) => {
     <>
       <button
         onClick={() => {
-          props.setOpenPopupTrigger(true);
-          props.setClickedItem(props.item);
+          setButtonPopup(true);
+          setChosenItem(props.item);
         }}
         id={props.item._id}
         className={nameOfClass}
@@ -33,8 +38,16 @@ const square = (props) => {
       >
         {/* TODO */}
       </button>
+
+      <Popup
+        trigger={buttonPopup}
+        setClosePopupTrigger={setButtonPopup}
+        popupItem={props.item}
+        setLands={props.setLands}
+        setChosenItem={setChosenItem}
+      ></Popup>
     </>
   );
 };
 
-export default square;
+export default Square;
