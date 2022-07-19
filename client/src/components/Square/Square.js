@@ -9,7 +9,7 @@ const Square = (props) => {
   const [chosenItem, setChosenItem] = useState({});
 
   let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-  console.log("props.item", props.item);
+  // console.log("props.item", props.item);
   const myStyle = {
     backgroundColor: "",
   };

@@ -18,6 +18,21 @@ const Popup = (props) => {
       "Content-type": "application/json",
     },
   };
+  const getSeller = async () => {
+    // get seller
+    let sellerId = props.popupItem.owner;
+    try {
+      const { data } = await axios.get("/api/users/" + sellerId, config);
+      if (data) {
+        return data.username;
+      } else {
+        return "";
+      }
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  };
   const updateSeller = async (_id) => {
     // get seller
     let sellerId = props.popupItem.owner;
@@ -128,6 +143,9 @@ const Popup = (props) => {
 
         {landPopUp && (
           <div id="land-popup">
+            <Row className="row" id="SquareOwner">
+              {getSeller}'s Land
+            </Row>
             <Row className="row" id="SquareName">
               {props.popupItem.name}
             </Row>

@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Navbar, Nav } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../actions/userActions";
 
 const Header = () => {
+  const [budget, setBudget] = useState(
+    JSON.parse(localStorage.getItem("userInfo")).budget
+  );
   const navigate = useNavigate();
   const dispatch = useDispatch();
   // const userLogin = useSelector((state) => state.userLogin);
@@ -13,6 +16,9 @@ const Header = () => {
     dispatch(logout());
     navigate("/");
   };
+  useEffect(() => {
+    setBudget(budget);
+  });
   return (
     <Navbar bg="primary" expand="lg" variant="dark">
       <Container>
@@ -22,9 +28,7 @@ const Header = () => {
           <Nav className="me-auto m-auto">
             {JSON.parse(localStorage.getItem("userInfo")).isBuyer && (
               <Navbar.Brand style={{ color: "white" }}>
-                {"Budget: " +
-                  JSON.parse(localStorage.getItem("userInfo")).budget +
-                  "$"}
+                {"Budget: " + budget + "$"}
               </Navbar.Brand>
             )}
             <Navbar.Brand style={{ color: "#563d7c", fontWeight: "bold" }}>

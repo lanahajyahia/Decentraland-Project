@@ -14,7 +14,7 @@ content-type: application/json
 
 {
     "username":"admin",
-    "budget": 1157
+    "_id": ["62d706b6ae5e9ac2559f7015","62d706b6ae5e9ac2559f7015"]
 }
 
 ###
@@ -44,27 +44,10 @@ content-type: application/json
 
 ###
 
-POST http://localhost:5000/api/lands/create
+POST http://localhost:5000/api/lands/createLands
 content-type: application/json
 
-[{
-		"color": "var(--bs-notForSale)",
-		"createdAt": "2022-07-18T19:48:32.988Z",
-		"name": "notForSale",
-		"owner": "62d5b77edbb1630b69c27c72",
-		"price": 97,
-		"status": false
-
-	},
-	{
-		"name": "test6",
-		"price": 122
-	},
-	{
-
-		"name": "test6",
-		"price": 122
-	}
+[{"name": "forSale", "price": 21, "owner": "62d6dcc4a2cf8705d1cd08d7", "color": "var(--bs-forSale)"}
 ]
 
 ###

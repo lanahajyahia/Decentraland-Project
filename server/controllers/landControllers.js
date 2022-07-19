@@ -6,7 +6,7 @@ const Land = require("../models/landModel");
 // const generateToken = require("../utils/generateToken");
 
 const createLands = asyncHandler(async (req, res) => {
-  console.log("lands", lands);
+  // console.log("lands", lands);
   const land = await Land.insertMany(req.body);
 
   if (land) {
@@ -20,7 +20,7 @@ const createLands = asyncHandler(async (req, res) => {
 
 const getLands = asyncHandler(async (req, res) => {
   const lands = await Land.find();
-
+  console.log("getLands", lands);
   if (lands) {
     res.json(lands);
   } else {

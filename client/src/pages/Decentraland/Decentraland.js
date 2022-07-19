@@ -25,6 +25,12 @@ const colorsArray = [
   },
 ];
 
+const config = {
+  headers: {
+    "Content-type": "application/json",
+  },
+};
+
 const Decentraland = () => {
   const [lands, setLands] = useState([]);
 
@@ -34,6 +40,7 @@ const Decentraland = () => {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
   const createLands = async (row = 10, col = 10) => {
+    var myLands = [];
     let numOfParks = 0;
     for (let i = 0; i < row * col; i++) {
       let randNum = 0;
@@ -42,63 +49,81 @@ const Decentraland = () => {
       // } else {
       //   randNum = Math.floor(Math.random() * 3);
       // }
-      try {
-        let name = "";
-        let color = "";
-        if (
-          i % row === parseInt(col / 2) ||
-          parseInt(i / row) === parseInt(row / 2)
-        ) {
-          name = "Street";
-          color = "var(--bs-street)";
-        } else if (
-          (i % row === 1 || (parseInt(i / row) === row - 2 && i % row > 1)) &&
-          numOfParks < row * col * 0.2
-        ) {
-          name = "Park";
-          color = "var(--bs-park)";
-        } else {
-          name = colorsArray[randNum].type;
-          color = colorsArray[randNum].color;
-        }
-
-        if (name === "Park") {
-          numOfParks++;
-        }
-        const config = {
-          headers: {
-            "Content-type": "application/json",
-          },
-        };
-        let price = 0;
-        let owner = userInfo._id;
-        if (name === "notForSale" || name === "forSale") {
-          price = Math.floor(Math.random() * (200 - 15 + 1) + 15);
-        }
-
-        const { data } = await axios.post(
-          "/api/lands/createLands",
-          { name, color, price, owner },
-          config
-        );
-        // ONLY LANDS FOR SALE OR NOT FOR SALE - update owner lands
-        if (name === "notForSale" || name === "forSale") {
-          let username = "admin";
-          let lands = data._id;
-          await axios.post(
-            "/api/users/updateAsset",
-            { username, lands },
-            config
-          );
-        }
-
-        // console.log("create data decentraland", data);
-        setLands([...lands, data]);
-      } catch (error) {
-        console.log(error);
+      let name = "";
+      let color = "";
+      if (
+        i % row === parseInt(col / 2) ||
+        parseInt(i / row) === parseInt(row / 2)
+      ) {
+        name = "Street";
+        color = "var(--bs-street)";
+      } else if (
+        (i % row === 1 || (parseInt(i / row) === row - 2 && i % row > 1)) &&
+        numOfParks < row * col * 0.2
+      ) {
+        name = "Park";
+        color = "var(--bs-park)";
+      } else {
+        name = colorsArray[randNum].type;
+        color = colorsArray[randNum].color;
       }
+
+      if (name === "Park") {
+        numOfParks++;
+      }
+
+      let price = 0;
+      let owner = userInfo._id;
+      if (name === "notForSale" || name === "forSale") {
+        price = Math.floor(Math.random() * (200 - 15 + 1) + 15);
+      }
+
+      let obj = {};
+      obj.name = name;
+      obj.price = price;
+      obj.owner = owner;
+      obj.color = color;
+      // console.log("obj", obj);
+      myLands.push(obj);
+
+      // console.log("lands for now", lands);
     }
-    localStorage.setItem("landsInfo", JSON.stringify(lands));
+    setLands([...lands, myLands]);
+    try {
+      // console.log("try data", lands);
+      const { data } = await axios.post(
+        "/api/lands/createLands",
+        myLands,
+        config
+      );
+
+      // // // ONLY LANDS FOR SALE OR NOT FOR SALE - update owner lands
+      // if (name === "notForSale" || name === "forSale") {
+      //   let username = "admin";
+      //   let lands = data._id;
+      //   await axios.post("/api/users/updateAsset", { username, lands }, config);
+      // }
+
+      const checkMyLands = (item) => {
+        if (
+          item.owner === userInfo._id &&
+          (item.name === "notForSale" || item.name === "forSale")
+        ) {
+          return item._id;
+        }
+      };
+      const _id = data.filter(checkMyLands);
+      console.log("lands1", _id);
+      let username = userInfo.username;
+      await axios.post("/api/users/updateAsset", { username, _id }, config);
+
+      // console.log("create data decentraland", data);
+      // console.log("lands created", data);
+    } catch (error) {
+      console.log(error);
+    }
+
+    // localStorage.setItem("landsInfo", JSON.stringify(lands));
   };
 
   useEffect(() => {
@@ -113,7 +138,8 @@ const Decentraland = () => {
         const { data } = await axios.get("/api/lands", config);
 
         if (data.length === 0) {
-          createLands(50, 50);
+          createLands(10, 10);
+          // console.log("data.length");
           localStorage.setItem("landsInfo", JSON.stringify(lands));
         } else {
           setLands(data);
@@ -147,7 +173,7 @@ const Decentraland = () => {
     localStorage.setItem("landsInfo", JSON.stringify(lands));
   }
 
-  let colSize = 20 * 50;
+  let colSize = 400;
   return (
     <Container
       id="decentralandDiv"
@@ -155,8 +181,6 @@ const Decentraland = () => {
     >
       <div>
         {lands.map((item, i) => (
-          // <div key={i} id={i} className="boardRow">
-
           <Square
             key={i}
             // setOpenPopupTrigger={setButtonPopup}
@@ -164,8 +188,6 @@ const Decentraland = () => {
             item={item}
             setLands={setLands}
           ></Square>
-
-          // </div>
         ))}
       </div>
     </Container>
