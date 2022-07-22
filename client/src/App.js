@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import GamePage from "./pages/GamePage/GamePage";
+import Decentraland from "./pages/Decentraland/Decentraland";
 
 function App() {
   return (
@@ -16,7 +17,8 @@ function App() {
           <Route path="/" element={<LandingPage />} exact />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/decentraland" element={<GamePage />} exact />
+          {/* removed exact from Decentraland */}
+          <Route path="/decentraland" element={<Decentraland />} />
         </Routes>
       </main>
       <Footer />

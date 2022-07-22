@@ -12,26 +12,12 @@ const Popup = (props) => {
   // console.log(loggedUser);
   const [editTrigger, setEditTrigger] = useState(false);
   const [landPopUp, setLandPopup] = useState(true);
+  // const [sellerName, setSellerName] = useState("");
   const [buyError, setBuyError] = useState(null);
   const config = {
     headers: {
       "Content-type": "application/json",
     },
-  };
-  const getSeller = async () => {
-    // get seller
-    let sellerId = props.popupItem.owner;
-    try {
-      const { data } = await axios.get("/api/users/" + sellerId, config);
-      if (data) {
-        return data.username;
-      } else {
-        return "";
-      }
-    } catch (error) {
-      console.log(error);
-      return false;
-    }
   };
   const updateSeller = async (_id) => {
     // get seller
@@ -98,8 +84,14 @@ const Popup = (props) => {
       // get seller details
       let _id = props.popupItem._id;
       if (updateSeller(_id)) {
+        // update new owner
         updateBuyer(loggedUser.username, buyerBudget, _id);
+
+        // update land
         updateLand(_id, loggedUser._id);
+
+        // set new seller
+        props.setSellerName(loggedUser.username);
       } else {
         setBuyError("Error buying land, try again later!");
       }
@@ -125,6 +117,7 @@ const Popup = (props) => {
       setBuyError("You don't have enough money!");
     }
   };
+
   //trigger is a true or false val to trigger the popup
   return props.trigger ? (
     <div className="popup">
@@ -143,9 +136,13 @@ const Popup = (props) => {
 
         {landPopUp && (
           <div id="land-popup">
-            <Row className="row" id="SquareOwner">
-              {getSeller}'s Land
-            </Row>
+            {(props.popupItem.name === "forSale" ||
+              props.popupItem.name === "notForSale") && (
+              <Row id="ownerName" className="row">
+                Owner: {props.sellerName}
+              </Row>
+            )}
+
             <Row className="row" id="SquareName">
               {props.popupItem.name}
             </Row>

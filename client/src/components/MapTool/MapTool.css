@@ -7,5 +7,12 @@
 }
 
 .mapRow {
+  --bs-gutter-x: 1.5rem;
   justify-content: center;
+}
+
+#currentBudget {
+  width: fit-content;
+  right: 0;
+  position: fixed;
 }

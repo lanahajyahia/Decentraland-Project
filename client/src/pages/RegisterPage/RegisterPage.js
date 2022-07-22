@@ -6,10 +6,11 @@ import { useNavigate } from "react-router-dom";
 import { Form, Row, Button, ButtonGroup, ToggleButton } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../actions/userActions";
+import "./../../bootstrap.min.css";
 
 const RegisterPage = () => {
   // const [checked, setChecked] = useState(false);
-  const [isBuyer, setIsBuyer] = useState(null);
+  const [isBuyer, setIsBuyer] = useState(true);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
@@ -39,6 +40,7 @@ const RegisterPage = () => {
       setMessage("PASSWORD DOESN'T MATCH");
     } else {
       if (isBuyer !== null) {
+        console.log("register", isBuyer);
         console.log("regis page", username, password, isBuyer);
         dispatch(register(username, password, isBuyer));
       } else {
@@ -82,17 +84,29 @@ const RegisterPage = () => {
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </Form.Group>
-          <Row>
-            <div>Please select position in the game:</div>
-          </Row>
-          <br />
-          <ButtonGroup className="mb-2">
+          <Row>Register as:</Row>
+
+          <Form.Group className="mb-3" controlId="formBasicCheckbox">
+            {players.map((radio, idx) => (
+              <Form.Check
+                key={idx}
+                type="checkbox"
+                label={radio.name}
+                checked={isBuyer === radio.value}
+                onChange={() => {
+                  setIsBuyer(radio.value);
+                }}
+              ></Form.Check>
+            ))}
+          </Form.Group>
+
+          {/* <ButtonGroup className="mb-3">
             {players.map((radio, idx) => (
               <ToggleButton
                 key={idx}
                 id={`radio-${idx}`}
                 type="radio"
-                variant="secondary"
+                variant="outline-secondary"
                 name="radio"
                 value={radio.value}
                 checked={isBuyer === radio.value}
@@ -101,11 +115,13 @@ const RegisterPage = () => {
                 {radio.name}
               </ToggleButton>
             ))}
-          </ButtonGroup>
-          <br />
-          <Button variant="primary" type="submit">
-            Submit
-          </Button>
+          </ButtonGroup> */}
+
+          <Row>
+            <Button variant="primary" type="submit">
+              Submit
+            </Button>
+          </Row>
         </Form>
       </div>
     </MainScreen>

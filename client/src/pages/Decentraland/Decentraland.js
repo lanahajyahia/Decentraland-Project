@@ -4,6 +4,8 @@ import Square from "../../components/Square/Square";
 import "./../../bootstrap.min.css";
 import "./Decentraland.css";
 import axios from "axios";
+import MapTool from "../../components/MapTool/MapTool";
+
 // import Popup from "../../components/Popup/Popup";
 
 const colorsArray = [
@@ -179,6 +181,8 @@ const Decentraland = () => {
       id="decentralandDiv"
       style={{ gridTemplateColumns: colSize + "px" }}
     >
+      <MapTool userInfo={userInfo} />
+
       <div>
         {lands.map((item, i) => (
           <Square

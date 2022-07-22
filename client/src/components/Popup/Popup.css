@@ -38,3 +38,7 @@
   left: 19px;
   margin-top: 0.5em;
 }
+#ownerName {
+  font-weight: bold;
+  font-family: sans-serif;
+}
