@@ -54,14 +54,53 @@ const Decentraland = () => {
       let name = "";
       let color = "";
       if (
+        // + -> street
         i % row === parseInt(col / 2) ||
         parseInt(i / row) === parseInt(row / 2)
       ) {
         name = "Street";
         color = "var(--bs-street)";
       } else if (
-        (i % row === 1 || (parseInt(i / row) === row - 2 && i % row > 1)) &&
-        numOfParks < row * col * 0.2
+        // rigth up + -> street
+        i % row > parseInt(row / 2) &&
+        parseInt(i / row) < parseInt(col / 2) &&
+        (i % row === parseInt((row * 3) / 4) ||
+          parseInt(i / row) === parseInt(col / 4))
+      ) {
+        name = "Street";
+        color = "var(--bs-street)";
+      } else if (
+        // left down + -> street
+        i % row < parseInt(row / 2) &&
+        parseInt(i / row) > parseInt(col / 2) &&
+        (i % row === parseInt(row / 4) ||
+          parseInt(i / row) === parseInt((col * 3) / 4))
+      ) {
+        name = "Street";
+        color = "var(--bs-street)";
+      } else if (
+        // H -> parks
+        i % row < parseInt(row / 2) - 1 &&
+        i % row > 1 &&
+        parseInt(i / row) < parseInt(col / 2) - 1 &&
+        parseInt(i / row) > 2 &&
+        numOfParks < row * col * 0.2 &&
+        (i % row === parseInt(col / 2) - 2 ||
+          i % row === parseInt(col / 2) - 3 ||
+          i % row === 2 ||
+          i % row === 3 ||
+          parseInt(i / row) === parseInt(col / 4) ||
+          parseInt(i / row) === parseInt(col / 4) + 1)
+      ) {
+        name = "Park";
+        color = "var(--bs-park)";
+      } else if (
+        // rest -> parks
+        i % row > parseInt(row / 2) + 1 &&
+        i % row < row - 1 &&
+        parseInt(i / row) > parseInt(col / 2) + 1 &&
+        parseInt(i / row) < row - 2 &&
+        numOfParks < row * col * 0.15
       ) {
         name = "Park";
         color = "var(--bs-park)";
@@ -140,7 +179,7 @@ const Decentraland = () => {
         const { data } = await axios.get("/api/lands", config);
 
         if (data.length === 0) {
-          createLands(10, 10);
+          createLands(50, 50);
           // console.log("data.length");
           localStorage.setItem("landsInfo", JSON.stringify(lands));
         } else {
@@ -175,25 +214,28 @@ const Decentraland = () => {
     localStorage.setItem("landsInfo", JSON.stringify(lands));
   }
 
-  let colSize = 400;
+  let colSize = 500;
   return (
-    <Container
-      id="decentralandDiv"
-      style={{ gridTemplateColumns: colSize + "px" }}
-    >
-      <MapTool userInfo={userInfo} />
-
-      <div>
-        {lands.map((item, i) => (
-          <Square
-            key={i}
-            // setOpenPopupTrigger={setButtonPopup}
-            // setClickedItem={setChosenItem}
-            item={item}
-            setLands={setLands}
-          ></Square>
-        ))}
-      </div>
+    <Container>
+      <Container>
+        <MapTool userInfo={userInfo} />
+      </Container>
+      <Container
+        id="decentralandDiv"
+        style={{ gridTemplateColumns: colSize + "px" }}
+      >
+        <div>
+          {lands.map((item, i) => (
+            <Square
+              key={i}
+              // setOpenPopupTrigger={setButtonPopup}
+              // setClickedItem={setChosenItem}
+              item={item}
+              setLands={setLands}
+            ></Square>
+          ))}
+        </div>
+      </Container>{" "}
     </Container>
   );
 };
