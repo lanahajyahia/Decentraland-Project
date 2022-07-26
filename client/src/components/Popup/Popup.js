@@ -91,19 +91,19 @@ const Popup = (props) => {
         setBuyError("Error buying land, try again later!");
       }
 
-      let landsInfo = JSON.parse(localStorage.getItem("landsInfo"));
+      // let landsInfo = JSON.parse(localStorage.getItem("landsInfo"));
 
-      //Find index of specific object using findIndex method.
-      let objIndex = landsInfo.findIndex(
-        (obj) => obj._id === props.popupItem._id
-      );
+      // //Find index of specific object using findIndex method.
+      // let objIndex = landsInfo.findIndex(
+      //   (obj) => obj._id === props.popupItem._id
+      // );
 
-      landsInfo[objIndex].owner = loggedUser._id;
-      // check if lands belong to the owner
-      props.setLands(landsInfo);
-      props.setChosenItem(landsInfo[objIndex]);
-      // Save back to localStorage
-      localStorage.setItem("landsInfo", JSON.stringify(landsInfo));
+      // landsInfo[objIndex].owner = loggedUser._id;
+      // // check if lands belong to the owner
+      // props.setLands(landsInfo);
+      // props.setChosenItem(landsInfo[objIndex]);
+      // // Save back to localStorage
+      // localStorage.setItem("landsInfo", JSON.stringify(landsInfo));
 
       // logged user
       loggedUser["budget"] = buyerBudget;
@@ -149,20 +149,19 @@ const Popup = (props) => {
             {
               /* allow edit only if user's Land */
               // same check think to remove one !
-              // loggedUser._id === props.popupItem.owner &&
-              //   loggedUser.lands
-              //     .map((object) => object._id)
-              //     .indexOf(props.popupItem._id) > -1 && (
-              //     <button
-              //       className="btn btn-primary edit-btn"
-              //       onClick={() => {
-              //         setEditTrigger(true);
-              //         setLandPopup(false);
-              //       }}
-              //     >
-              //       edit
-              //     </button>
-              //   )
+              loggedUser._id === props.popupItem.owner &&
+                (props.popupItem.name === "forSale" ||
+                  props.popupItem.name === "notForSale") && (
+                  <button
+                    className="btn btn-primary edit-btn"
+                    onClick={() => {
+                      setEditTrigger(true);
+                      setLandPopup(false);
+                    }}
+                  >
+                    edit
+                  </button>
+                )
             }
             {
               /* allow edit only if user's Land */

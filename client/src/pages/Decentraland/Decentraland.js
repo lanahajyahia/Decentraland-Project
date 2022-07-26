@@ -193,10 +193,12 @@ const Decentraland = () => {
         const { data } = await axios.get("/api/lands", config);
 
         if (data.length === 0) {
+          console.log("data.length", data.length);
           createLands(100, 100);
           // console.log("data.length");
           localStorage.setItem("landsInfo", JSON.stringify(lands));
         } else {
+          console.log("data.length else ", data.length);
           setLands(data);
           localStorage.setItem("landsInfo", JSON.stringify(data));
         }
@@ -212,23 +214,25 @@ const Decentraland = () => {
     }
   }, []);
   // console.log("yLands", JSON.parse(localStorage.getItem("yLands")));
-  if (lands.length !== 0) {
-    localStorage.setItem("landsInfo", JSON.stringify(lands));
-    // let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    // check if lands belong to the owner
-    // const checkMyLands = (item) => {
-    //   return (
-    //     item.owner === userInfo._id &&
-    //     (item.name === "notForSale" || item.name === "forSale")
-    //   );
-    // };
-    // const result_myLands = lands.filter(checkMyLands);
-    // userInfo["lands"] = result_myLands;
-    // Save back to localStorage
-    // localStorage.setItem("userInfo", JSON.stringify(userInfo));
-  } else {
-    setLands(JSON.parse(localStorage.getItem("landsInfo")));
-  }
+  // if (lands && lands.length !== 0) {
+  //   localStorage.setItem("landsInfo", JSON.stringify(lands));
+  //   // setLands(JSON.parse(localStorage.getItem("landsInfo")));
+  // }
+  // let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  // check if lands belong to the owner
+  // const checkMyLands = (item) => {
+  //   return (
+  //     item.owner === userInfo._id &&
+  //     (item.name === "notForSale" || item.name === "forSale")
+  //   );
+  // };
+  // const result_myLands = lands.filter(checkMyLands);
+  // userInfo["lands"] = result_myLands;
+  // Save back to localStorage
+  // localStorage.setItem("userInfo", JSON.stringify(userInfo));
+  // } else {
+  //
+  // }
 
   let colSize = 1000;
   return (
