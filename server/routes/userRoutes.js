@@ -3,7 +3,7 @@ const {
   getUser,
   registerUser,
   authUser,
-  updateUser,
+  updateUserBudget,
   removeUsersLand,
 } = require("../controllers/userControllers");
 const router = express.Router();
@@ -13,7 +13,7 @@ router.route("/login").post(authUser);
 // find user by id
 router.get("/:id", getUser);
 // update asset of user
-router.route("/updateAsset").post(updateUser);
+router.route("/updateBudget").post(updateUserBudget);
 router.route("/removeAsset").post(removeUsersLand);
 
 module.exports = router;

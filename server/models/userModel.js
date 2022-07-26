@@ -22,14 +22,7 @@ const userSchema = mongoose.Schema(
       type: Number,
       default: 1000,
     },
-    lands: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Land",
-      },
-    ],
   },
-
   {
     timestamps: true,
   }

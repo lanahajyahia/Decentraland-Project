@@ -10,7 +10,6 @@ const EditLand = (props) => {
   const [editPrice, setEditPrice] = useState(props.popupItem.price);
   const [error, setError] = useState(null);
 
-
   const updateLand = async () => {
     if (
       editStatus !== props.popupItem.name ||
@@ -29,7 +28,7 @@ const EditLand = (props) => {
           let name = editStatus;
           let _id = props.popupItem._id;
           let color =
-            name == "forSale" ? "var(--bs-forSale)" : "var(--bs-notForSale)";
+            name === "forSale" ? "var(--bs-forSale)" : "var(--bs-notForSale)";
           // destructure only data from what we get
           const { data } = await axios.post(
             "/api/lands/update",

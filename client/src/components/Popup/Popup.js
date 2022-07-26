@@ -8,18 +8,15 @@ import axios from "axios";
 import "./Popup.css";
 const Popup = (props) => {
   const loggedUser = JSON.parse(localStorage.getItem("userInfo"));
-
-  // console.log(loggedUser);
   const [editTrigger, setEditTrigger] = useState(false);
   const [landPopUp, setLandPopup] = useState(true);
-  // const [sellerName, setSellerName] = useState("");
   const [buyError, setBuyError] = useState(null);
   const config = {
     headers: {
       "Content-type": "application/json",
     },
   };
-  const updateSeller = async (_id) => {
+  const updateSellerBudget = async () => {
     // get seller
     let sellerId = props.popupItem.owner;
     try {
@@ -28,8 +25,8 @@ const Popup = (props) => {
       let budget = data.budget + props.popupItem.price;
       if (data) {
         await axios.post(
-          "/api/users/removeAsset",
-          { username, _id, budget },
+          "/api/users/updateBudget",
+          { username, budget },
           config
         );
 
@@ -42,10 +39,10 @@ const Popup = (props) => {
   };
   const updateBuyer = async (username, budget, _id) => {
     try {
-      console.log("updateBuyer", username, budget, _id);
+      console.log("updateBuyer", username, budget);
       const buyer = await axios.post(
-        "/api/users/updateAsset",
-        { username, _id, budget },
+        "/api/users/updateBudget",
+        { username, budget },
         config
       );
       if (buyer) {
@@ -81,14 +78,12 @@ const Popup = (props) => {
     console.log("buyerBudget", buyerBudget);
     if (buyerBudget >= 0) {
       setBuyError(null);
-      // get seller details
-      let _id = props.popupItem._id;
-      if (updateSeller(_id)) {
-        // update new owner
-        updateBuyer(loggedUser.username, buyerBudget, _id);
+      if (updateSellerBudget()) {
+        // update new owner budget
+        updateBuyer(loggedUser.username, buyerBudget);
 
-        // update land
-        updateLand(_id, loggedUser._id);
+        // update land owner
+        updateLand(props.popupItem._id, loggedUser._id);
 
         // set new seller
         props.setSellerName(loggedUser.username);
@@ -142,7 +137,6 @@ const Popup = (props) => {
                 Owner: {props.sellerName}
               </Row>
             )}
-
             <Row className="row" id="SquareName">
               {props.popupItem.name}
             </Row>
@@ -155,20 +149,20 @@ const Popup = (props) => {
             {
               /* allow edit only if user's Land */
               // same check think to remove one !
-              loggedUser._id === props.popupItem.owner &&
-                loggedUser.lands
-                  .map((object) => object._id)
-                  .indexOf(props.popupItem._id) > -1 && (
-                  <button
-                    className="btn btn-primary edit-btn"
-                    onClick={() => {
-                      setEditTrigger(true);
-                      setLandPopup(false);
-                    }}
-                  >
-                    edit
-                  </button>
-                )
+              // loggedUser._id === props.popupItem.owner &&
+              //   loggedUser.lands
+              //     .map((object) => object._id)
+              //     .indexOf(props.popupItem._id) > -1 && (
+              //     <button
+              //       className="btn btn-primary edit-btn"
+              //       onClick={() => {
+              //         setEditTrigger(true);
+              //         setLandPopup(false);
+              //       }}
+              //     >
+              //       edit
+              //     </button>
+              //   )
             }
             {
               /* allow edit only if user's Land */

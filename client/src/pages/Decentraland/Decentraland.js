@@ -36,8 +36,6 @@ const config = {
 const Decentraland = () => {
   const [lands, setLands] = useState([]);
 
-  // const [buttonPopup, setButtonPopup] = useState(false);
-  // const [chosenItem, setChosenItem] = useState({});
   const localLands = JSON.parse(localStorage.getItem("landsInfo"));
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
@@ -46,11 +44,7 @@ const Decentraland = () => {
     let numOfParks = 0;
     for (let i = 0; i < row * col; i++) {
       let randNum = 0;
-      // if (numOfParks >= row * col * 0.1) {
       randNum = Math.floor(Math.random() * 2);
-      // } else {
-      //   randNum = Math.floor(Math.random() * 3);
-      // }
       let name = "";
       let color = "";
       if (
@@ -124,45 +118,65 @@ const Decentraland = () => {
       obj.price = price;
       obj.owner = owner;
       obj.color = color;
-      // console.log("obj", obj);
       myLands.push(obj);
+      if (myLands.length === 1000) {
+        setLands([...lands, myLands]);
+        try {
+          // console.log("try data", lands);
+          const { data } = await axios.post(
+            "/api/lands/createLands",
+            myLands,
+            config
+          );
+          // console.log(data);
+
+          if (data) {
+            console.log("creating lands", data);
+            myLands = [];
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
 
       // console.log("lands for now", lands);
     }
-    setLands([...lands, myLands]);
-    try {
-      // console.log("try data", lands);
-      const { data } = await axios.post(
-        "/api/lands/createLands",
-        myLands,
-        config
-      );
+    // setLands([...lands, myLands]);
+    // try {
+    //   // console.log("try data", lands);
+    //   const { data } = await axios.post(
+    //     "/api/lands/createLands",
+    //     myLands,
+    //     config
+    //   );
 
-      // // // ONLY LANDS FOR SALE OR NOT FOR SALE - update owner lands
-      // if (name === "notForSale" || name === "forSale") {
-      //   let username = "admin";
-      //   let lands = data._id;
-      //   await axios.post("/api/users/updateAsset", { username, lands }, config);
-      // }
+    //   console.log("creating lands", data);
 
-      const checkMyLands = (item) => {
-        if (
-          item.owner === userInfo._id &&
-          (item.name === "notForSale" || item.name === "forSale")
-        ) {
-          return item._id;
-        }
-      };
-      const _id = data.filter(checkMyLands);
-      console.log("lands1", _id);
-      let username = userInfo.username;
-      await axios.post("/api/users/updateAsset", { username, _id }, config);
+    //   // // ONLY LANDS FOR SALE OR NOT FOR SALE - update owner lands
+    //   if (name === "notForSale" || name === "forSale") {
+    //     let username = "admin";
+    //     let lands = data._id;
+    //     await axios.post("/api/users/updateAsset", { username, lands }, config);
+    //   }
 
-      // console.log("create data decentraland", data);
-      // console.log("lands created", data);
-    } catch (error) {
-      console.log(error);
-    }
+    //   const checkMyLands = (item) => {
+    //     if (
+    //       item.owner === userInfo._id &&
+    //       (item.name === "notForSale" || item.name === "forSale")
+    //     ) {
+    //       return item._id;
+    //     }
+    //   };
+    //   const _id = data.filter(checkMyLands);
+    //   console.log("lands1", _id);
+    //   let username = userInfo.username;
+    //   await axios.post("/api/users/updateAsset", { username, _id }, config);
+
+    //   console.log("create data decentraland", data);
+    //   console.log("lands created", data);
+    // } catch (error) {
+    //   console.log(error);
+    // }
 
     // localStorage.setItem("landsInfo", JSON.stringify(lands));
   };
@@ -179,7 +193,7 @@ const Decentraland = () => {
         const { data } = await axios.get("/api/lands", config);
 
         if (data.length === 0) {
-          createLands(50, 50);
+          createLands(100, 100);
           // console.log("data.length");
           localStorage.setItem("landsInfo", JSON.stringify(lands));
         } else {
@@ -199,22 +213,24 @@ const Decentraland = () => {
   }, []);
   // console.log("yLands", JSON.parse(localStorage.getItem("yLands")));
   if (lands.length !== 0) {
-    let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    // check if lands belong to the owner
-    const checkMyLands = (item) => {
-      return (
-        item.owner === userInfo._id &&
-        (item.name === "notForSale" || item.name === "forSale")
-      );
-    };
-    const result_myLands = lands.filter(checkMyLands);
-    userInfo["lands"] = result_myLands;
-    // Save back to localStorage
-    localStorage.setItem("userInfo", JSON.stringify(userInfo));
     localStorage.setItem("landsInfo", JSON.stringify(lands));
+    // let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    // check if lands belong to the owner
+    // const checkMyLands = (item) => {
+    //   return (
+    //     item.owner === userInfo._id &&
+    //     (item.name === "notForSale" || item.name === "forSale")
+    //   );
+    // };
+    // const result_myLands = lands.filter(checkMyLands);
+    // userInfo["lands"] = result_myLands;
+    // Save back to localStorage
+    // localStorage.setItem("userInfo", JSON.stringify(userInfo));
+  } else {
+    setLands(JSON.parse(localStorage.getItem("landsInfo")));
   }
 
-  let colSize = 500;
+  let colSize = 1000;
   return (
     <Container>
       <Container>
@@ -225,14 +241,8 @@ const Decentraland = () => {
         style={{ gridTemplateColumns: colSize + "px" }}
       >
         <div>
-          {lands.map((item, i) => (
-            <Square
-              key={i}
-              // setOpenPopupTrigger={setButtonPopup}
-              // setClickedItem={setChosenItem}
-              item={item}
-              setLands={setLands}
-            ></Square>
+          {lands?.map((item, i) => (
+            <Square key={i} item={item} setLands={setLands}></Square>
           ))}
         </div>
       </Container>{" "}

@@ -79,12 +79,12 @@ const getUser = asyncHandler(async (req, res) => {
 });
 
 // update assets and budget - TODO
-const updateUser = asyncHandler(async (req, res) => {
-  const { username, _id, budget } = req.body;
+const updateUserBudget = asyncHandler(async (req, res) => {
+  const { username, budget } = req.body;
   try {
     const updateUser = await User.updateOne(
       { username: username },
-      { $push: { lands: _id }, budget: budget }
+      { budget: budget }
     );
     if (updateUser) res.json(updateUser);
   } catch (err) {
@@ -114,6 +114,6 @@ module.exports = {
   registerUser,
   authUser,
   getUser,
-  updateUser,
+  updateUserBudget,
   removeUsersLand,
 };
