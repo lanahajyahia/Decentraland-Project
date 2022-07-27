@@ -119,7 +119,7 @@ const Decentraland = () => {
       obj.owner = owner;
       obj.color = color;
       myLands.push(obj);
-      if (myLands.length === 1000) {
+      if (myLands.length === 500) {
         setLands([...lands, myLands]);
         try {
           // console.log("try data", lands);
@@ -194,7 +194,7 @@ const Decentraland = () => {
 
         if (data.length === 0) {
           console.log("data.length", data.length);
-          createLands(100, 100);
+          createLands(50, 50);
           // console.log("data.length");
           localStorage.setItem("landsInfo", JSON.stringify(lands));
         } else {
@@ -210,7 +210,7 @@ const Decentraland = () => {
       create();
     } else {
       setLands(JSON.parse(localStorage.getItem("landsInfo")));
-      localStorage.setItem("landsInfo", JSON.stringify(lands));
+      // localStorage.setItem("landsInfo", JSON.stringify(lands));
     }
   }, []);
   // console.log("yLands", JSON.parse(localStorage.getItem("yLands")));
@@ -234,7 +234,7 @@ const Decentraland = () => {
   //
   // }
 
-  let colSize = 1000;
+  let colSize = 500;
   return (
     <Container>
       <Container>

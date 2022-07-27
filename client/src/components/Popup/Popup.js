@@ -4,6 +4,7 @@ import { Row } from "react-bootstrap";
 import "./../../bootstrap.min.css";
 import ErrorMessage from "./../ErrorMessage";
 import axios from "axios";
+import { FaDollarSign } from "react-icons/fa";
 
 import "./Popup.css";
 const Popup = (props) => {
@@ -91,19 +92,19 @@ const Popup = (props) => {
         setBuyError("Error buying land, try again later!");
       }
 
-      // let landsInfo = JSON.parse(localStorage.getItem("landsInfo"));
+      let landsInfo = JSON.parse(localStorage.getItem("landsInfo"));
 
       // //Find index of specific object using findIndex method.
-      // let objIndex = landsInfo.findIndex(
-      //   (obj) => obj._id === props.popupItem._id
-      // );
+      let objIndex = landsInfo.findIndex(
+        (obj) => obj._id === props.popupItem._id
+      );
 
-      // landsInfo[objIndex].owner = loggedUser._id;
-      // // check if lands belong to the owner
-      // props.setLands(landsInfo);
-      // props.setChosenItem(landsInfo[objIndex]);
-      // // Save back to localStorage
-      // localStorage.setItem("landsInfo", JSON.stringify(landsInfo));
+      landsInfo[objIndex].owner = loggedUser._id;
+      // check if lands belong to the owner
+      props.setLands(landsInfo);
+      props.setChosenItem(landsInfo[objIndex]);
+      // Save back to localStorage
+      localStorage.setItem("landsInfo", JSON.stringify(landsInfo));
 
       // logged user
       loggedUser["budget"] = buyerBudget;
@@ -138,12 +139,17 @@ const Popup = (props) => {
               </Row>
             )}
             <Row className="row" id="SquareName">
-              {props.popupItem.name}
+              {props.popupItem.name === "forSale" && <Row>For Sale</Row>}
+              {props.popupItem.name === "notForSale" && <Row>Not For Sale</Row>}
+              {props.popupItem.name !== "notForSale" &&
+                props.popupItem.name !== "forSale" && (
+                  <Row>{props.popupItem.name}</Row>
+                )}
             </Row>
             {(props.popupItem.name === "forSale" ||
               props.popupItem.name === "notForSale") && (
               <Row className="row" id="squarePrice">
-                Price: {props.popupItem.price}$
+                Cost: {props.popupItem.price}$
               </Row>
             )}
             {
