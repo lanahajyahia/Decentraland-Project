@@ -5,14 +5,9 @@ import "./../../bootstrap.min.css";
 import "./Decentraland.css";
 import axios from "axios";
 import MapTool from "../../components/MapTool/MapTool";
-
-// import Popup from "../../components/Popup/Popup";
+import Loading from "./../../components/Loading";
 
 const colorsArray = [
-  // {
-  //   type: "street",
-  //   color: "var(--bs-street)",
-  // },
   {
     type: "notForSale",
     color: "var(--bs-notForSale)",
@@ -35,6 +30,7 @@ const config = {
 
 const Decentraland = () => {
   const [lands, setLands] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const localLands = JSON.parse(localStorage.getItem("landsInfo"));
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -122,13 +118,11 @@ const Decentraland = () => {
       if (myLands.length === 500) {
         setLands([...lands, myLands]);
         try {
-          // console.log("try data", lands);
           const { data } = await axios.post(
             "/api/lands/createLands",
             myLands,
             config
           );
-          // console.log(data);
 
           if (data) {
             console.log("creating lands", data);
@@ -138,47 +132,9 @@ const Decentraland = () => {
           console.log(error);
         }
       }
-
-      // console.log("lands for now", lands);
     }
-    // setLands([...lands, myLands]);
-    // try {
-    //   // console.log("try data", lands);
-    //   const { data } = await axios.post(
-    //     "/api/lands/createLands",
-    //     myLands,
-    //     config
-    //   );
-
-    //   console.log("creating lands", data);
-
-    //   // // ONLY LANDS FOR SALE OR NOT FOR SALE - update owner lands
-    //   if (name === "notForSale" || name === "forSale") {
-    //     let username = "admin";
-    //     let lands = data._id;
-    //     await axios.post("/api/users/updateAsset", { username, lands }, config);
-    //   }
-
-    //   const checkMyLands = (item) => {
-    //     if (
-    //       item.owner === userInfo._id &&
-    //       (item.name === "notForSale" || item.name === "forSale")
-    //     ) {
-    //       return item._id;
-    //     }
-    //   };
-    //   const _id = data.filter(checkMyLands);
-    //   console.log("lands1", _id);
-    //   let username = userInfo.username;
-    //   await axios.post("/api/users/updateAsset", { username, _id }, config);
-
-    //   console.log("create data decentraland", data);
-    //   console.log("lands created", data);
-    // } catch (error) {
-    //   console.log(error);
-    // }
-
-    // localStorage.setItem("landsInfo", JSON.stringify(lands));
+    // setLoading(false);
+    window.location.reload(false);
   };
 
   useEffect(() => {
@@ -194,13 +150,13 @@ const Decentraland = () => {
 
         if (data.length === 0) {
           console.log("data.length", data.length);
-          createLands(50, 50);
-          // console.log("data.length");
+          createLands(100, 100);
           localStorage.setItem("landsInfo", JSON.stringify(lands));
         } else {
           console.log("data.length else ", data.length);
           setLands(data);
           localStorage.setItem("landsInfo", JSON.stringify(data));
+          setLoading(false);
         }
       } catch (error) {
         console.log(error);
@@ -208,33 +164,15 @@ const Decentraland = () => {
     };
     if (!localLands || localLands.length === 0) {
       create();
+      // setLoading(false);
     } else {
       setLands(JSON.parse(localStorage.getItem("landsInfo")));
+      setLoading(false);
       // localStorage.setItem("landsInfo", JSON.stringify(lands));
     }
   }, []);
-  // console.log("yLands", JSON.parse(localStorage.getItem("yLands")));
-  // if (lands && lands.length !== 0) {
-  //   localStorage.setItem("landsInfo", JSON.stringify(lands));
-  //   // setLands(JSON.parse(localStorage.getItem("landsInfo")));
-  // }
-  // let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-  // check if lands belong to the owner
-  // const checkMyLands = (item) => {
-  //   return (
-  //     item.owner === userInfo._id &&
-  //     (item.name === "notForSale" || item.name === "forSale")
-  //   );
-  // };
-  // const result_myLands = lands.filter(checkMyLands);
-  // userInfo["lands"] = result_myLands;
-  // Save back to localStorage
-  // localStorage.setItem("userInfo", JSON.stringify(userInfo));
-  // } else {
-  //
-  // }
 
-  let colSize = 500;
+  let colSize = 1000;
   return (
     <Container>
       <Container>
@@ -245,9 +183,11 @@ const Decentraland = () => {
         style={{ gridTemplateColumns: colSize + "px" }}
       >
         <div>
-          {lands?.map((item, i) => (
-            <Square key={i} item={item} setLands={setLands}></Square>
-          ))}
+          {loading && <Loading />}
+          {!loading &&
+            lands?.map((item, i) => (
+              <Square key={i} item={item} setLands={setLands}></Square>
+            ))}
         </div>
       </Container>{" "}
     </Container>
