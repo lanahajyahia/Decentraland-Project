@@ -88,8 +88,6 @@ const updateUserBudget = asyncHandler(async (req, res) => {
     );
     if (updateUser) res.json(updateUser);
   } catch (err) {
-    // res.status(400);
-    // throw new Error("Cannot update asset of user");
     return res.status(500).json({ message: err.message });
   }
 });
@@ -104,8 +102,6 @@ const removeUsersLand = asyncHandler(async (req, res) => {
     );
     if (updateUser) res.json(updateUser);
   } catch (err) {
-    // res.status(400);
-    // throw new Error("Cannot update asset of user");
     return res.status(500).json({ message: err.message });
   }
 });

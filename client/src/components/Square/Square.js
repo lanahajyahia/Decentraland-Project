@@ -21,7 +21,6 @@ const Square = (props) => {
     try {
       const { data } = await axios.get("/api/users/" + sellerId, config);
       if (data) {
-        console.log("data.username", data.username);
         setSellerName(data.username);
       } else {
         setSellerName("");
@@ -33,7 +32,6 @@ const Square = (props) => {
   };
 
   let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-  // console.log("props.item", props.item);
   const myStyle = {
     backgroundColor: "",
   };

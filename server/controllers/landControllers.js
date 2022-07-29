@@ -6,11 +6,9 @@ const Land = require("../models/landModel");
 // const generateToken = require("../utils/generateToken");
 
 const createLands = asyncHandler(async (req, res) => {
-  // console.log("lands", lands);
   const land = await Land.insertMany(req.body);
 
   if (land) {
-    console.log("land", land);
     res.status(201).json(land);
   } else {
     res.status(400);
@@ -20,11 +18,9 @@ const createLands = asyncHandler(async (req, res) => {
 
 const getLands = asyncHandler(async (req, res) => {
   const lands = await Land.find();
-  console.log("getLands", lands);
   if (lands) {
     res.json(lands);
   } else {
-    console.log("here");
     res.status(400);
 
     throw new Error("getLands func error");
@@ -54,8 +50,6 @@ const updateLand = asyncHandler(async (req, res) => {
     );
     if (updateLand) res.json(updateLand);
   } catch (err) {
-    // res.status(400);
-    // throw new Error("Cannot update asset of user");
     return res.status(500).json({ message: err.message });
   }
 });

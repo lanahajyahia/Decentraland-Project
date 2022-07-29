@@ -115,7 +115,7 @@ const Decentraland = () => {
       obj.owner = owner;
       obj.color = color;
       myLands.push(obj);
-      if (myLands.length === 500) {
+      if (myLands.length === 1000) {
         setLands([...lands, myLands]);
         try {
           const { data } = await axios.post(
@@ -125,7 +125,6 @@ const Decentraland = () => {
           );
 
           if (data) {
-            console.log("creating lands", data);
             myLands = [];
           }
         } catch (error) {
@@ -149,11 +148,9 @@ const Decentraland = () => {
         const { data } = await axios.get("/api/lands", config);
 
         if (data.length === 0) {
-          console.log("data.length", data.length);
           createLands(100, 100);
           localStorage.setItem("landsInfo", JSON.stringify(lands));
         } else {
-          console.log("data.length else ", data.length);
           setLands(data);
           localStorage.setItem("landsInfo", JSON.stringify(data));
           setLoading(false);
@@ -164,7 +161,6 @@ const Decentraland = () => {
     };
     if (!localLands || localLands.length === 0) {
       create();
-      // setLoading(false);
     } else {
       setLands(JSON.parse(localStorage.getItem("landsInfo")));
       setLoading(false);

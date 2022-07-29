@@ -12,7 +12,6 @@ import axios from "axios";
 
 // THIS IS A FUNCTION THAT RETURN ANOTHER FUNCTION - CALLBACK
 export const login = (username, password) => async (dispatch) => {
-  console.log(username, password);
 
   try {
     dispatch({ type: USER_LOGIN_REQUEST });
@@ -32,7 +31,6 @@ export const login = (username, password) => async (dispatch) => {
       },
       config
     );
-    console.log("data", data);
     dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
     // local storage cannot store object data - only string
     // setUserInfo(JSON.stringify(data));
@@ -97,5 +95,4 @@ export const register = (username, password, isBuyer) => async (dispatch) => {
     // setLoading(false);
   }
 
-  console.log(username, isBuyer);
 };
