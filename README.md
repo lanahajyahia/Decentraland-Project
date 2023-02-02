@@ -1,4 +1,4 @@
-# Decentraland1
+# Decentraland
 ## Client side
 React, JavaScript, HTML, CSS and bootstrap.
 I developed all UI and game functionality in frontend. 
