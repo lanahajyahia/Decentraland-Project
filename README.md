@@ -21,9 +21,9 @@ Username for users is unique.
 Each land has one owner, but an owner can have many lands.
 
 ## Instalation
-The file I attached in moodle, has a presentaion, a demo video and the game in file Decentraland1. The project includes two files, server and client. In case to install, first npm install and then npm run dev In the main file.
+The project includes two files, server and client. In case to install, first npm install and then npm run dev In the main file.
 
-Backend runs on port 5000 and frontend in 3000. Decentraland
+Backend runs on port 5000 and frontend in 3000.
 My DB connection is on cloud using mongo atlas, There's an .env file in server folder that has my db connection url:
 DATABASE_URL= ur db
 PORT=5000
