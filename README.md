@@ -7,6 +7,9 @@ I used redux to work with components state in an easy way.
 I installed many npm libraries to help me create the game.
 The game has 4 main Pages: Landing page, Login page, register page and decentraland page. When you register from the first time the game render a 100X100 lands. The lands has the letter H designed for parks as 20% from the whole lands.
 
+<img width="950" alt="image" src="https://user-images.githubusercontent.com/46194686/216405593-99fccfbf-f7ff-4e78-98fc-a363cc67bcee.png">
+<img width="959" alt="image" src="https://user-images.githubusercontent.com/46194686/216405919-21a912e9-1efb-4351-88dc-dc3a5772518d.png">
+
 
 ## Server side
 Node js and mongoDB
