@@ -14,7 +14,7 @@ The game has 4 main Pages: Landing page, Login page, register page and decentral
 ## Server side
 Node js and mongoDB
 I developed all API in server side to save the game’s data in database. Using REST API.
-I dived the files into server, routes, controllers and schemas.
+I divided the files into server, routes, controllers and schemas.
 I have user schema and land schema
       User: username, pass, Buyer or visitor, budget.
       Land: owner, type (For sale, not for sale, park, street), price and color.
